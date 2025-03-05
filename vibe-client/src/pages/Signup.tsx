@@ -5,7 +5,12 @@ const Signup = () => {
     <>
       <title>vibeVault - Signup</title>
       <main>
-        <InputGroup inputType="text" id="test" inputName="test" labelText="First name" />
+        <h1>Signup</h1>
+        <InputGroup inputType="text" id="txtFirstName" inputName="firstName" labelText="First name" />
+        <InputGroup inputType="text" id="txtLastName" inputName="lastName" labelText="Last name" />
+        <InputGroup inputType="email" id="txtEmail" inputName="email" labelText="Email" />
+        <InputGroup inputType="password" id="pwPassword" inputName="password" labelText="Password" />
+        <InputGroup inputType="password" id="pwRepeat" inputName="repeatPassword" labelText="Repeat Password" />
       </main>
     </>
   );

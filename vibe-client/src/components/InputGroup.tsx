@@ -9,7 +9,7 @@ interface Props {
 
 const InputGroup = ({ labelText, id, inputName, inputType }: Props) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-52 md:w-xs">
       <label htmlFor={id} className="md:text-2xl">
         {labelText}
       </label>

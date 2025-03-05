@@ -13,3 +13,9 @@
   --color-primary: #a2a77f;
   --color-secondary: #06062d;
 }
+
+@layer base {
+  h1 {
+    @apply text-3xl my-8 md:text-6xl md:my-4;
+  }
+}
