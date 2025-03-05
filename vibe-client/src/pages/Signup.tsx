@@ -1,5 +1,10 @@
 const Signup = () => {
-  return <div>Signup</div>;
+  return (
+    <>
+      <title>vibeVault - Signup</title>
+      <div>Signup</div>;
+    </>
+  );
 };
 
 export default Signup;
