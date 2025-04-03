@@ -11,7 +11,11 @@
   --color-white: #f9f9f9;
 
   --color-primary: #a2a77f;
+  --color-primary-hover: #c6caa4;
+
   --color-secondary: #06062d;
+
+  --radius-default: 0.5rem;
 }
 
 @layer base {
