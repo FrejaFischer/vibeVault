@@ -33,6 +33,8 @@ jobs:
             echo "No changes in vibe-client folder"
             echo "changed=false" >> $GITHUB_ENV
           fi
+          echo "Changed files: $CHANGED_FILES"  # Debug: log changed files
+          echo "Changed flag: ${{ env.changed }}"  # Debug: log the changed flag
 
       - name: npm install, build, and test
         if: env.changed == 'true'
