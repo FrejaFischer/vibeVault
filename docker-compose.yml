@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-database
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  vibe-client:
+    container_name: vibe-client
+    build:
+      context: ./vibe-client
+      dockerfile: Dockerfile
+    environment:
+      VITE_API_URL: http://localhost:5000
+      CHOKIDAR_USEPOLLING: true
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+    volumes:
+      - ./vibe-client:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
+  frontend:
