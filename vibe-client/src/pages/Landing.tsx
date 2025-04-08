@@ -13,7 +13,7 @@ const Landing = () => {
           </a>{" "}
           or{" "}
           <a href="/signup" className="underline">
-            Signup
+            Signup test
           </a>
         </p>
         <p>test</p>
