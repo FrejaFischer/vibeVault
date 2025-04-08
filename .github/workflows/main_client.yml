@@ -25,7 +25,7 @@ jobs:
         id: check_changed
         run: |
           git fetch --depth=1 origin main  # Ensure we are comparing against the latest main
-          CHANGED_FILES=$(git diff --name-only HEAD $(git merge-base HEAD origin/main) -- vibe-client/)
+          CHANGED_FILES=$(git diff --name-only HEAD..origin/main -- vibe-client/)
           if [[ -n "$CHANGED_FILES" ]]; then
             echo "vibe-client folder has changed"
             echo "changed=true" >> $GITHUB_ENV
