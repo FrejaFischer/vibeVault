@@ -13,7 +13,7 @@ const Landing = () => {
           </a>{" "}
           or{" "}
           <a href="/signup" className="underline">
-            Signup test
+            Signup
           </a>
         </p>
         <VinylsGraphic styling="self-center xs:col-start-2 xs:row-span-2 sm:col-start-4 lg:col-start-7 lg:row-span-2" />
