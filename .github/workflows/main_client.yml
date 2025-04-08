@@ -24,10 +24,19 @@ jobs:
       - name: Check if files in vibe-client have changed
         id: check_changed
         run: |
-          git diff --exit-code vibe-client || echo "vibe-client folder has changed"
+          git fetch --depth=1 origin main  # Ensure we are comparing against the latest main
+          CHANGED_FILES=$(git diff --name-only HEAD..origin/main -- vibe-client/)
+          if [[ -n "$CHANGED_FILES" ]]; then
+            echo "vibe-client folder has changed"
+            echo "changed=true" >> $GITHUB_ENV
+          else
+            echo "No changes in vibe-client folder"
+            echo "changed=false" >> $GITHUB_ENV
+          fi
+          echo "Changed files: $CHANGED_FILES"  # Debug: log changed files
 
       - name: npm install, build, and test
-        if: steps.check_changed.outputs.changed == 'true'
+        if: env.changed == 'true'
         run: |
           cd vibe-client
           npm install
