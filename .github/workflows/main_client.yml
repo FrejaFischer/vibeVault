@@ -21,7 +21,13 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Check if files in vibe-client have changed
+        id: check_changed
+        run: |
+          git diff --exit-code vibe-client || echo "vibe-client folder has changed"
+
       - name: npm install, build, and test
+        if: steps.check_changed.outputs.changed == 'true'
         run: |
           cd vibe-client
           npm install
