@@ -1,6 +1,9 @@
 import { useEntries } from "../hooks/useEntries";
+import axios from "axios";
 
 const EntriesGrid = () => {
+  const test = [];
+
   const { entries, loading, error } = useEntries();
 
   if (loading) return <p>Loading entries...</p>;
