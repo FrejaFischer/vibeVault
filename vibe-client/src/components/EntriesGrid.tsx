@@ -1,6 +1,6 @@
 import { useEntries } from "../hooks/useEntries";
 
-const EntriesList = () => {
+const EntriesGrid = () => {
   const { entries, loading, error } = useEntries();
 
   if (loading) return <p>Loading entries...</p>;
@@ -17,4 +17,4 @@ const EntriesList = () => {
   );
 };
 
-export default EntriesList;
+export default EntriesGrid;
