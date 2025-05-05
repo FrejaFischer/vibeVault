@@ -1,5 +1,4 @@
 stages:
-  - static-test
   - dynamic-test
 
 build_and_test_vibe_client:
