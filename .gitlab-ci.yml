@@ -1,0 +1,22 @@
+stages:
+  - static-test
+  - dynamic-test
+
+running_pipelines:
+  stage: static-test
+  script:
+    - echo "Running pipelines"
+
+build_and_test_vibe_client:
+  stage: dynamic-test
+  image: node:18
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - vibe-client/**/*
+  script:
+    - echo "Checking out vibe-client"
+    - cd vibe-client
+    - npm install
+    - npm run build
+    - npm run test
