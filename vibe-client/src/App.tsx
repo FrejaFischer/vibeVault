@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Landing from "./pages/Landing";
 import TestPage from "./pages/TestPage";
 
+// This is a test comment (should be deleted)
 function App() {
   return (
     <>
