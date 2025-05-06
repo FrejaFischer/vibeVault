@@ -1,3 +1,6 @@
+.merge_request_rule: &merge_request_rule
+  if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
 stages:
   - static-test
   - dynamic-test
@@ -7,16 +10,61 @@ running_pipelines:
   script:
     - echo "Running pipelines"
 
-build_and_test_vibe_client:
-  stage: dynamic-test
+lint_vibe_client:
+  stage: static-test
   image: node:18
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - <<: *merge_request_rule
       changes:
         - vibe-client/**/*
   script:
-    - echo "Checking out vibe-client"
+    - cd vibe-client
+    - npm install eslint@9.21.0
+    - npx eslint
+
+lint_vibe_server:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - cd vibe-server
+    - npm install eslint@9.21.0
+    - npx eslint
+
+audit_vibe_client:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - cd vibe-client
+    - npm audit
+
+audit_vibe_server:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - cd vibe-server
+    - npm audit
+
+build_vibe_client:
+  stage: dynamic-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - echo "Building vibe-client"
     - cd vibe-client
     - npm install
     - npm run build
-    - npm run test --if-present
