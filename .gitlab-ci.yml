@@ -17,6 +17,16 @@ lint_vibe_client:
     - cd vibe-client
     - npx eslint
 
+lint_vibe_server:
+  stage: static-test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - vibe-server/**/*
+  script:
+    - cd vibe-server
+    - npx eslint
+
 build_vibe_client:
   stage: dynamic-test
   image: node:18
