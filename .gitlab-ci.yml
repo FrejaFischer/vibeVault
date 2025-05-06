@@ -7,6 +7,10 @@ stages:
 
 running_pipelines:
   stage: static-test
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - /*
   script:
     - echo "Running pipelines"
 
