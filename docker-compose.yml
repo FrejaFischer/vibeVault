@@ -32,6 +32,7 @@ services:
       context: ./vibe-client
       dockerfile: Dockerfile
     environment:
+      RTE: ${RTE}
       VITE_API_URL: http://localhost:5000
       CHOKIDAR_USEPOLLING: true
     depends_on:
