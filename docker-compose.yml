@@ -26,6 +26,23 @@ services:
     networks:
       - backend
 
+  # vibe-server:
+  #   container_name: vibe-server
+  #   build:
+  #     context: ./vibe-server
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/mydatabase
+  #   ports:
+  #     - "5000:5000"
+  #   networks:
+  #     - backend
+  #     - frontend
+  #   volumes:
+  #     - ./vibe-server/:/app
+
   vibe-client:
     container_name: vibe-client
     build:
@@ -36,13 +53,25 @@ services:
       CHOKIDAR_USEPOLLING: true
     depends_on:
       - postgres
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     networks:
       - frontend
     volumes:
       - ./vibe-client:/app
       - /app/node_modules
+
+  nginx:
+    image: nginx:latest
+    networks:
+      - frontend
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+    ports:
+      - 8080:80
+    depends_on:
+      - vibe-client
+      # - vibe-server # add when server is added in docker compose
 
 volumes:
   postgres_data:
