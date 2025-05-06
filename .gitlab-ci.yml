@@ -9,6 +9,7 @@ running_pipelines:
 
 lint_vibe_client:
   stage: static-test
+  image: node:18
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
@@ -19,6 +20,7 @@ lint_vibe_client:
 
 lint_vibe_server:
   stage: static-test
+  image: node:18
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
@@ -29,6 +31,7 @@ lint_vibe_server:
 
 audit_vibe_client:
   stage: static-test
+  image: node:18
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
@@ -39,6 +42,7 @@ audit_vibe_client:
 
 audit_vibe_server:
   stage: static-test
+  image: node:18
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
