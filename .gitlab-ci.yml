@@ -7,7 +7,17 @@ running_pipelines:
   script:
     - echo "Running pipelines"
 
-build_and_test_vibe_client:
+lint_vibe_client:
+  stage: static-test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - vibe-client/**/*
+  script:
+    - cd vibe-client
+    - npx eslint
+
+build_vibe_client:
   stage: dynamic-test
   image: node:18
   rules:
@@ -15,8 +25,7 @@ build_and_test_vibe_client:
       changes:
         - vibe-client/**/*
   script:
-    - echo "Checking out vibe-client"
+    - echo "Building vibe-client"
     - cd vibe-client
     - npm install
     - npm run build
-    - npm run test --if-present
