@@ -53,8 +53,6 @@ services:
       CHOKIDAR_USEPOLLING: true
     depends_on:
       - postgres
-    # ports:
-    #   - "3000:3000"
     networks:
       - frontend
     volumes:
