@@ -13,9 +13,5 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Not used right now - Nginx serves the client for us
-# Expose port 3000
-# EXPOSE 3000
-
 # Command to run the application
 ENTRYPOINT ["sh", "entrypoint.sh"]
