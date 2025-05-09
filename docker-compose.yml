@@ -50,7 +50,7 @@ services:
       dockerfile: Dockerfile
     environment:
       RTE: ${RTE}
-      VITE_API_URL: http://localhost:5000
+      VITE_API_URL: http://localhost:5000 # This will change, when our Nginx handles the server url
       CHOKIDAR_USEPOLLING: true
     depends_on:
       - postgres
