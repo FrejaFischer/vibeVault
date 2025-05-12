@@ -50,17 +50,27 @@ services:
       dockerfile: Dockerfile
     environment:
       RTE: ${RTE}
-      VITE_API_URL: http://localhost:5000
+      VITE_API_URL: http://localhost:5000 # This will change, when our Nginx handles the server url
       CHOKIDAR_USEPOLLING: true
     depends_on:
       - postgres
-    ports:
-      - "3000:3000"
     networks:
       - frontend
     volumes:
-      - ./vibe-client:/app
-      - /app/node_modules
+      - ./vibe-client:/app # mounted volume. For connecting our client folder to our docker app directory, and make it update when changes appear
+      - /app/node_modules # exclude dependencies on the mount. If new depencies is added, we need to build again
+
+  nginx:
+    image: nginx:latest
+    networks:
+      - frontend
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+    ports:
+      - 8080:80
+    depends_on:
+      - vibe-client
+      # - vibe-server # add when server is added in docker compose
 
 volumes:
   postgres_data:
