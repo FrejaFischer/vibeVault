@@ -1,10 +1,12 @@
-import express from "express";
-// import init from "./startup/init"; // When we have the init script for connecting to db
+import express from "express"; // Handles HTTP Requests, Routing System and more.
+import init from "./startup/init"; // script for connecting to db and setup all endpoints / routes
 
 const app = express();
 
-// init(app);
+// Initinize our app server
+init(app);
 
+// API root route
 app.get("/", (req, res) => {
   res.send("Hello World! This is the API for VibeVault");
 });
