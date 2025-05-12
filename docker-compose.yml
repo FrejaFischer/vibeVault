@@ -64,13 +64,14 @@ services:
     image: nginx:latest
     networks:
       - frontend
+      - backend
     volumes:
       - ./nginx:/etc/nginx/conf.d/
     ports:
       - 8080:80
     depends_on:
       - vibe-client
-      # - vibe-server # add when server is added in docker compose
+      - vibe-server
 
 volumes:
   postgres_data:
