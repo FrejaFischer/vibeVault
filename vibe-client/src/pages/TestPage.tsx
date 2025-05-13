@@ -1,10 +1,12 @@
-import EntriesGrid from "../components/EntriesGrid";
+import TestForm from "../components/TestForm";
+import TestGrid from "../components/TestGrid";
 
 const TestPage = () => {
   return (
     <>
       <title>vibeVault - Test</title>
-      <EntriesGrid />
+      <TestGrid />
+      <TestForm />
     </>
   );
 };
