@@ -5,11 +5,12 @@ services:
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: vibevault
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./seeder/seed.sql:/docker-entrypoint-initdb.d/seed.sql
     networks:
       - backend
 
@@ -34,7 +35,7 @@ services:
   #   depends_on:
   #     - postgres
   #   environment:
-  #     DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/mydatabase
+  #     DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/vibevault
   #   ports:
   #     - "5000:5000"
   #   networks:
