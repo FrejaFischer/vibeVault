@@ -9,3 +9,6 @@ docker-compose-test:
 
 docker-compose-prod:
 	RTE=prod docker-compose up --build --abort-on-container-exit
+
+reset-database:
+	docker exec -i postgres-database psql -U myuser -d vibevault < ./seeder/seed.sql
