@@ -24,6 +24,10 @@ Run `docker-compose-dev`
 
 Run command `make reset-database` reset your local database
 
+### Frontend
+
+When starting the frontend through docker, access it on http://localhost:8080
+
 ## Authors
 
 Emma Hamdorf-Baunsgaard & Freja Fischer Nielsen
