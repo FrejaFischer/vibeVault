@@ -1,6 +1,6 @@
 import InputGroup from "../components/InputGroup";
 
-const Signup = () => {
+const SignupPage = () => {
   return (
     <>
       <title>vibeVault - Signup</title>
@@ -16,4 +16,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;
