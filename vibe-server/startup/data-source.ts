@@ -1,15 +1,17 @@
 import "dotenv/config";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Test } from "../entities/Test";
+// import { Test } from "../entities/Test";
+import { Album } from "../entities/Album";
+import { Artist } from "../entities/Artist";
 
 const connectionString = process.env.DATABASE_URL;
 
 export const AppDataSource = new DataSource({
   type: "postgres",
   url: connectionString,
-  synchronize: true,
-  entities: [Test],
+  synchronize: false,
+  entities: [Album, Artist],
 });
 
 // Solution for connecting without connection string
