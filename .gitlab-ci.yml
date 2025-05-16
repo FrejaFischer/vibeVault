@@ -16,6 +16,7 @@ running_pipelines:
         - Readme.md
         - .gitignore
         - seeder/**/*
+        - nginx/*
   script:
     - echo "Running pipelines"
 
@@ -40,8 +41,7 @@ lint_vibe_server:
         - vibe-server/**/*
   script:
     - cd vibe-server
-    - npm install eslint@9.21.0
-    - npx eslint
+    - npm run lint
 
 audit_vibe_client:
   stage: static-test
@@ -75,5 +75,18 @@ build_vibe_client:
   script:
     - echo "Building vibe-client"
     - cd vibe-client
+    - npm install
+    - npm run build
+
+build_vibe_server:
+  stage: dynamic-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - echo "Building vibe-server"
+    - cd vibe-server
     - npm install
     - npm run build

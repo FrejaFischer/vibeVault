@@ -7,6 +7,7 @@
     "build": "npm install && tsc"
   },
   "dependencies": {
+    "@eslint/js": "^9.26.0",            // Eslint
     "cors": "^2.8.5",                   // Package for implementing CORS
     "dotenv": "^16.5.0",                // For getting .env files
     "express": "^5.1.0"                 // Node.js web application framework. Handles HTTP Requests, Routing System and more.
@@ -15,10 +16,14 @@
     "typeorm": "^0.3.23"                // For connecting and working with our database
   },
   "devDependencies": {
-    "@types/cors": "^2.8.18",           // Type definition package that adds the missing TypeScript support for Cors
-    "@types/express": "^5.0.1",         // Type definition package that adds the missing TypeScript support for Express
-    "nodemon": "^3.1.10",               // Development tool for Node.js apps. Automatically restarts the server when changes happens.
-    "ts-node": "^10.9.2"                // Utility that allows us to run TypeScript code directly in Node.js without first compiling it to JS.
-    "typescript": "^5.8.3"              // For using tsc TypeScript command
+    "@types/cors": "^2.8.18",                      // Type definition package that adds the missing TypeScript support for Cors
+    "@types/express": "^5.0.1",                    // Type definition package that adds the missing TypeScript support for Express
+    "@typescript-eslint/eslint-plugin": "^8.32.1", // Eslint
+    "@typescript-eslint/parser": "^8.32.1",        // Eslint
+    "@typescript-eslint/utils": "^8.32.1",         // Eslint
+    "eslint": "^9.26.0",                           // Eslint
+    "nodemon": "^3.1.10",                          // Development tool for Node.js apps. Automatically restarts the server when changes happens.
+    "ts-node": "^10.9.2"                           // Utility that allows us to run TypeScript code directly in Node.js without first compiling it to JS.
+    "typescript": "^5.8.3"                         // For using tsc TypeScript command
   }
 }
