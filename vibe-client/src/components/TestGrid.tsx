@@ -1,16 +1,24 @@
-import { useTests } from "../hooks/useTests";
+import { useAlbums } from "../hooks/useAlbums";
+// import { useTests } from "../hooks/useTests";
 
 const TestGrid = () => {
-  const { testData, loading, error } = useTests();
+  // const { testData, loading, error } = useTests();
+  const { albums, loading, error } = useAlbums();
 
   if (loading) return <p>Loading tests...</p>;
-  if (error) return <p>Error loading tests: {error.message}</p>;
+  if (error)
+    return (
+      <section>
+        <p>We are very sorry, but an error occured while loading albums. Please come back later</p>
+        <p>({error.message})</p>
+      </section>
+    );
 
   return (
     <ul>
-      {testData.map((test) => (
-        <li key={test.id}>
-          {test.name} ({test.role})
+      {albums.map((album) => (
+        <li key={album.album_id}>
+          {album.title} (Artist ID: {album.artist_id})
         </li>
       ))}
     </ul>
