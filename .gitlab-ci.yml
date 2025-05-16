@@ -41,6 +41,7 @@ lint_vibe_server:
         - vibe-server/**/*
   script:
     - cd vibe-server
+    - npm install eslint@9.26.0
     - npm run lint
 
 audit_vibe_client:
