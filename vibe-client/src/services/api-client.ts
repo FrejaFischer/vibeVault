@@ -20,7 +20,7 @@ class ApiClient<T> {
     this.endpoint = endpoint;
   }
 
-  // Method for getting all data from specific endpoint, eks. GET "/test"
+  // Method for getting all data from specific endpoint, eks. GET "/albums"
   getAll = (config?: AxiosRequestConfig) => axiosInstance.get<Response<T>>(this.endpoint, config).then((res) => res.data);
 
   // Method for inserting new row to specific endpoint, eks. POST "/test"

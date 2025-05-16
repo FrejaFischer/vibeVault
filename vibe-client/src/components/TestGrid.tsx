@@ -1,8 +1,8 @@
 import { useAlbums } from "../hooks/useAlbums";
-// import { useTests } from "../hooks/useTests";
+
+// THIS IS A TEST COMPONENT
 
 const TestGrid = () => {
-  // const { testData, loading, error } = useTests();
   const { albums, loading, error } = useAlbums();
 
   if (loading) return <p>Loading tests...</p>;

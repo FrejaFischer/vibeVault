@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useCreateTest } from "../hooks/useCreateTest";
 
+// THIS IS A TEST COMPONENT
+
 const TestForm = () => {
   const createTest = useCreateTest(); // Get create test method from hook
   const [name, setName] = useState("");

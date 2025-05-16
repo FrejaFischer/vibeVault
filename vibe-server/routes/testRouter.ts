@@ -2,6 +2,8 @@ import { Router } from "express";
 import { Test } from "../entities/Test";
 import { AppDataSource } from "../startup/data-source";
 
+// THIS IS A TEST ROUTER
+
 const testRouter = Router();
 
 // Get the Test Entity (table)

@@ -1,7 +1,6 @@
 import "dotenv/config";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-// import { Test } from "../entities/Test";
 import { Album } from "../entities/Album";
 import { Artist } from "../entities/Artist";
 
@@ -19,10 +18,10 @@ export const AppDataSource = new DataSource({
 //   type: "postgres",
 //   host: "postgres",
 //   port: 5432,
-//   username: "myuser",
-//   password: "mypassword",
-//   database: "test",
+//   username: "app1",
+//   password: "changethispassword",
+//   database: "vibevault",
 //   synchronize: true,
-//   entities: [Test],
+//   entities: [Album, Artist],
 // });
 //

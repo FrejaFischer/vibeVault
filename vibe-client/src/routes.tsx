@@ -47,6 +47,7 @@ const router = createBrowserRouter([
             Component: ProfilePage,
           },
           {
+            // DELETE THIS BEFORE PRODUCTION
             path: "/test",
             Component: TestPage,
           },
