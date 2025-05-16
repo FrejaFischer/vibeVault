@@ -9,8 +9,10 @@ const albumRepo = AppDataSource.getRepository(Album);
 
 // GET route, for getting all albums
 albumRouter.get("/", async (req, res) => {
+  // find all albums
   const albums = await albumRepo.find();
-  console.log("Fetched rows:", albums); // See the fetched rows
+  // console.log("Fetched rows:", albums); // See the fetched rows
+  // send reponse of albums
   res.json({
     count: albums.length,
     results: albums,
