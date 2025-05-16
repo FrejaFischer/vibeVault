@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ApiClient, { Response } from "../services/api-client";
 import { Album } from "../types/album"; // The type of an album
-// import axios from "axios";
 
 // New instance of apiClient for calling our endpoint for albums
 const apiClient = new ApiClient<Album>("/albums");
@@ -17,8 +16,9 @@ export const useAlbums = () => {
         // Getting all albums from api endpoint. Expect reponse to be of type Album
         const response: Response<Album> = await apiClient.getAll();
 
-        // Validation
+        // Validation (OBS)
         // Here there should be some validation of the data in the reponse - Sanitizing to avoid XSS
+        // To avoid running any html or javascript put in as data in the db
 
         // Storing the results of the response from API
         setAlbums(response.results);
