@@ -35,7 +35,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/vibevault
+      DATABASE_URL: postgresql://app1:changethispassword@postgres:5432/vibevault # Development db - Server uses app1 db user
     ports:
       - "5000:5000"
     networks:
