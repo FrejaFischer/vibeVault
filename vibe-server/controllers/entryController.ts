@@ -38,6 +38,7 @@ export const getEntryById = async (req: Request, res: Response) => {
   // Extract tracks from entry.entryTracks
   const tracks = entry.entryTracks.map((et) => et.track);
 
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   const { entryTracks, ...entryWithoutEntryTracks } = entry;
   const entryWithTracks = { ...entryWithoutEntryTracks, tracks };
 
