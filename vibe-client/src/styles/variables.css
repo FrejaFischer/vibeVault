@@ -22,8 +22,10 @@
   --color-neutral-brand-900: #3d3b46;
 
   --color-positive-brand-200: #b9e39c;
+  --color-positive-brand-400: #667e53;
 
   --color-negative-brand-200: #fb8c98;
+  --color-negative-brand-400: #fa233b;
 }
 
 @layer base {
