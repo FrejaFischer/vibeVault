@@ -8,5 +8,13 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
+    hmr: {
+      protocol: "ws",
+      host: "localhost",
+      clientPort: 8080, // Port Nginx is exposing the server
+    },
   },
 });
+
+// hmr (Hot Module Reloading) settings are needed, because Nginx is serving the Server,
+// and therefore Vite's Web Socket (ws) needs this configuration

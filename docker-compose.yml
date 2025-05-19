@@ -27,22 +27,22 @@ services:
     networks:
       - backend
 
-  # vibe-server:
-  #   container_name: vibe-server
-  #   build:
-  #     context: ./vibe-server
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - postgres
-  #   environment:
-  #     DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/vibevault
-  #   ports:
-  #     - "5000:5000"
-  #   networks:
-  #     - backend
-  #     - frontend
-  #   volumes:
-  #     - ./vibe-server/:/app
+  vibe-server:
+    container_name: vibe-server
+    build:
+      context: ./vibe-server
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://app1:changethispassword@postgres:5432/vibevault # Development db - Server uses app1 db user
+    ports:
+      - "5000:5000"
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - ./vibe-server/:/app
 
   vibe-client:
     container_name: vibe-client
@@ -51,7 +51,7 @@ services:
       dockerfile: Dockerfile
     environment:
       RTE: ${RTE}
-      VITE_API_URL: http://localhost:5000 # This will change, when our Nginx handles the server url
+      VITE_API_URL: http://localhost:8080/api/
       CHOKIDAR_USEPOLLING: true
     depends_on:
       - postgres
@@ -65,13 +65,14 @@ services:
     image: nginx:latest
     networks:
       - frontend
+      - backend
     volumes:
       - ./nginx:/etc/nginx/conf.d/
     ports:
       - 8080:80
     depends_on:
       - vibe-client
-      # - vibe-server # add when server is added in docker compose
+      - vibe-server
 
 volumes:
   postgres_data:
