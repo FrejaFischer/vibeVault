@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Column, ManyToOne, JoinColumn, OneToMany, ManyToMany } from "typeorm";
 import { User } from "./User";
+import { EntryTrack } from "./EntryTrack";
+import { Track } from "./Track";
 
 @Entity("entry")
 export class Entry {
@@ -43,4 +45,7 @@ export class Entry {
   @ManyToOne(() => User, (user) => user.entries)
   @JoinColumn({ name: "user_id" }) // links this column to user's PK in the user table
   user: User;
+
+  @OneToMany(() => EntryTrack, (entryTrack) => entryTrack.entry)
+  entryTracks: EntryTrack[];
 }

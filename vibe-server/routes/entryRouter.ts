@@ -1,36 +1,45 @@
-import { Router, Request, Response } from "express";
-import { Entry } from "../entities/Entry";
-import { AppDataSource } from "../startup/data-source";
+import express from "express";
+import { createEntry, getEntries, getEntryById } from "../controllers/entryController";
 
-// Param types
-interface UserIdParams {
-  user_id: string;
-}
+const entryRouter = express.Router();
 
-const entryRouter = Router({ mergeParams: true });
+entryRouter.get("/", getEntries);
+entryRouter.post("/", createEntry);
+entryRouter.get("/:entry_id", getEntryById);
 
-// Get the Entry Entity (table)
-const entryRepo = AppDataSource.getRepository(Entry);
+// import { Router, Request, Response } from "express";
+// import { Entry } from "../entities/Entry";
+// import { AppDataSource } from "../startup/data-source";
 
-// GET route, for getting all entries from a user id
-entryRouter.get("/", async (req: Request<UserIdParams>, res: Response) => {
-  const userId = Number(req.params.user_id); // get user_id from URL and convert to number
+// // Param types
+// interface UserIdParams {
+//   user_id: string;
+// }
 
-  // Check if the userId is not a number
-  if (isNaN(userId)) {
-    res.status(400).json({ error: "Invalid user_id" });
-    return;
-  }
+// const entryRouter = Router({ mergeParams: true });
 
-  // Find entries with that user_id
-  const entries = await entryRepo.find({
-    where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
-  });
-  // send reponse of entries
-  res.json({
-    count: entries.length,
-    results: entries,
-  });
-});
+// // Get the Entry Entity (table)
+// const entryRepo = AppDataSource.getRepository(Entry);
+
+// // GET route, for getting all entries from a user id
+// entryRouter.get("/", async (req: Request<UserIdParams>, res: Response) => {
+//   const userId = Number(req.params.user_id); // get user_id from URL and convert to number
+
+//   // Check if the userId is not a number
+//   if (isNaN(userId)) {
+//     res.status(400).json({ error: "Invalid user_id" });
+//     return;
+//   }
+
+//   // Find entries with that user_id
+//   const entries = await entryRepo.find({
+//     where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
+//   });
+//   // send reponse of entries
+//   res.json({
+//     count: entries.length,
+//     results: entries,
+//   });
+// });
 
 export default entryRouter;

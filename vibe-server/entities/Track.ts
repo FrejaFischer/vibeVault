@@ -13,4 +13,7 @@ export class Track {
   @ManyToOne(() => Album, (album) => album.tracks)
   @JoinColumn({ name: "album_id" })
   album: Album;
+
+  @OneToMany(() => EntryTrack, (entryTrack) => entryTrack.track)
+  entryTracks: EntryTrack[];
 }
