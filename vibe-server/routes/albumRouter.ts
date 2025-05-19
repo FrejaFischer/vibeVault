@@ -1,22 +1,9 @@
-import { Router } from "express";
-import { Album } from "../entities/Album";
-import { AppDataSource } from "../startup/data-source";
+import express from "express";
+import { getAlbums, getAlbumTracks } from "../controllers/albumController";
 
-const albumRouter = Router();
+const albumRouter = express.Router();
 
-// Get the Album Entity (table)
-const albumRepo = AppDataSource.getRepository(Album);
-
-// GET route, for getting all albums
-albumRouter.get("/", async (req, res) => {
-  // find all albums
-  const albums = await albumRepo.find();
-  // console.log("Fetched rows:", albums); // See the fetched rows
-  // send reponse of albums
-  res.json({
-    count: albums.length,
-    results: albums,
-  });
-});
+albumRouter.get("/", getAlbums); // GET route, for getting all albums, handles optional search query
+albumRouter.get("/:album_id/tracks", getAlbumTracks); // GET route, for getting all tracks in a specific album
 
 export default albumRouter;
