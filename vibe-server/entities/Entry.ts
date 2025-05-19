@@ -41,6 +41,6 @@ export class Entry {
 
   // Many entries belong to one user
   @ManyToOne(() => User, (user) => user.entries)
-  @JoinColumn({ name: "user_id" }) // links this column to user's PK
+  @JoinColumn({ name: "user_id" }) // links this column to user's PK in the user table
   user: User;
 }

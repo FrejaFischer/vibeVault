@@ -16,7 +16,7 @@ const entryRepo = AppDataSource.getRepository(Entry);
 entryRouter.get("/", async (req: Request<UserIdParams>, res: Response) => {
   const userId = Number(req.params.user_id); // get user_id from URL and convert to number
 
-  // Check if the userId is a number
+  // Check if the userId is not a number
   if (isNaN(userId)) {
     res.status(400).json({ error: "Invalid user_id" });
     return;
