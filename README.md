@@ -28,6 +28,10 @@ Run command `make reset-database` reset your local database
 
 When starting the frontend through docker, access it on http://localhost:8080
 
+### Backend
+
+When starting the backend through docker, access it on http://localhost:8080/api/
+
 ## Authors
 
 Emma Hamdorf-Baunsgaard & Freja Fischer Nielsen
