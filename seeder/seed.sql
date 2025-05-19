@@ -32,15 +32,14 @@ DROP USER IF EXISTS app1;
 
 CREATE TABLE users
 (
-    user_id INT NOT NULL,
+    user_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(55) NOT NULL,
     last_name VARCHAR(120) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL UNIQUE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    deleted_at TIMESTAMPTZ,
-    CONSTRAINT user_pkey PRIMARY KEY  (user_id)
+    deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE album
@@ -135,9 +134,9 @@ ALTER TABLE entry_track
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
-INSERT INTO users (user_id, first_name, last_name, email, password, updated_at, deleted_at) VALUES
-    (1, N'John', N'Doe', 'john.doe@example.com', 'hashed_password1', NOW(), NULL),
-    (2, N'Jane', N'Smith', 'jane.smith@example.com', 'hashed_password2', NOW(), NULL);
+INSERT INTO users (first_name, last_name, email, password, updated_at, deleted_at) VALUES
+    (N'John', N'Doe', 'john.doe@example.com', 'hashed_password1', NOW(), NULL),
+    (N'Jane', N'Smith', 'jane.smith@example.com', 'hashed_password2', NOW(), NULL);
 
 INSERT INTO artist (artist_id, name) VALUES
     (1, N'AC/DC'),
