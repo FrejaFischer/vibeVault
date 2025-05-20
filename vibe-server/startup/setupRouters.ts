@@ -1,4 +1,4 @@
-import express from "express";
+import { Application } from "express";
 // import testRouter from "../routes/testRouter";
 import albumRouter from "../routes/albumRouter";
 import entryRouter from "../routes/entryRouter";
@@ -7,7 +7,7 @@ import trackRouter from "../routes/trackRouter";
 import userRouter from "../routes/userRouter";
 
 // Setup all our routes / endpoints
-const setupRouters = (app: express.Application) => {
+const setupRouters = (app: Application) => {
   // app.use("/test", testRouter); // Test endpoint for get and post test user (dont work anymore)
   app.use("/artists", artistRouter); // Test endpoint for getting artists
   app.use("/albums", albumRouter); // Test endpoint for getting albums
