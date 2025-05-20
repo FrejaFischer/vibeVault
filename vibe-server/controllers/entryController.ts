@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
 
-export const getEntries = async (req: Request, res: Response) => {
+export const getEntries: RequestHandler = async (req: Request, res: Response) => {
   const userId = 1;
   // Get the Entry Entity (table)
   const entryRepo = AppDataSource.getRepository(Entry);
@@ -17,22 +17,24 @@ export const getEntries = async (req: Request, res: Response) => {
   });
 };
 
-export const getEntryById = async (req: Request, res: Response) => {
-  const entryId = req.params.entry_id;
+export const getEntryById: RequestHandler = async (req: Request, res: Response) => {
+  const entryId = Number(req.params.entry_id);
 
-  if (isNaN(Number(entryId))) {
-    return res.status(400).json({ error: "Invalid entry_id" });
+  if (isNaN(entryId)) {
+    res.status(400).json({ error: "Invalid entry_id" });
+    return;
   }
 
   const entryRepo = AppDataSource.getRepository(Entry);
 
   const entry = await entryRepo.findOne({
-    where: { entry_id: Number(entryId) },
+    where: { entry_id: entryId },
     relations: ["entryTracks.track"], // still load entryTracks and their tracks
   });
 
   if (!entry) {
-    return res.status(404).json({ error: "Entry not found" });
+    res.status(404).json({ error: "Entry not found" });
+    return;
   }
 
   // Extract tracks from entry.entryTracks
@@ -48,11 +50,13 @@ export const getEntryById = async (req: Request, res: Response) => {
   });
 };
 
-export const createEntry = async (req: Request, res: Response) => {
+export const createEntry: RequestHandler = async (req: Request, res: Response) => {
+  //TODO: finish this functione, it is not finished yet
   const { title, start_period, end_period, playlist_link, cover_image, description } = req.body;
 
   if (!title || !start_period || !cover_image || !description) {
-    return res.status(400).json({ error: "Missing required fields" });
+    res.status(400).json({ error: "Missing required fields" });
+    return;
   }
 
   const entryRepo = AppDataSource.getRepository(Entry);

@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { ILike } from "typeorm";
 import { Track } from "../entities/Track";
 import { AppDataSource } from "../startup/data-source";
 
-export const getTracks = async (req: Request, res: Response) => {
+export const getTracks: RequestHandler = async (req: Request, res: Response) => {
   const search = req.query.search as string;
 
   // Get the Album Entity (table)

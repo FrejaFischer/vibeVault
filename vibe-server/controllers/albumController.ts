@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { Album } from "../entities/Album";
 import { AppDataSource } from "../startup/data-source";
 import { ILike } from "typeorm";
 
-export const getAlbums = async (req: Request, res: Response) => {
+export const getAlbums: RequestHandler = async (req: Request, res: Response) => {
   const search = req.query.search as string;
 
   // Get the Album Entity (table)
@@ -18,8 +18,14 @@ export const getAlbums = async (req: Request, res: Response) => {
   });
 };
 
-export const getAlbumTracks = async (req: Request, res: Response) => {
-  const albumId = parseInt(req.params.album_id);
+export const getAlbumTracks: RequestHandler = async (req: Request, res: Response) => {
+  const albumId = Number(req.params.album_id);
+
+  if (isNaN(albumId)) {
+    res.status(400).json({ error: "Invalid request" });
+    return;
+  }
+
   const albumRepo = AppDataSource.getRepository(Album);
 
   const album = await albumRepo.findOne({
@@ -28,7 +34,8 @@ export const getAlbumTracks = async (req: Request, res: Response) => {
   });
 
   if (!album) {
-    return res.status(404).json({ message: "Album not found" });
+    res.status(404).json({ message: "Album not found" });
+    return;
   }
 
   res.json({

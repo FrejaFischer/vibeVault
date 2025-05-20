@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { ILike } from "typeorm";
 import { Artist } from "../entities/Artist";
 import { Album } from "../entities/Album";
 import { AppDataSource } from "../startup/data-source";
 
-export const getArtists = async (req: Request, res: Response) => {
+export const getArtists: RequestHandler = async (req: Request, res: Response) => {
   const search = req.query.search as string;
 
   // Get the Album Entity (table)
@@ -19,18 +19,18 @@ export const getArtists = async (req: Request, res: Response) => {
   });
 };
 
-export const getArtistAlbums = async (req: Request, res: Response) => {
-  const artistId = req.params.artist_id;
+export const getArtistAlbums: RequestHandler = async (req: Request, res: Response) => {
+  const artistId = Number(req.params.artist_id);
 
   // Check if the artistId is not a number
-  if (isNaN(Number(artistId))) {
+  if (isNaN(artistId)) {
     res.status(400).json({ error: "Invalid request" });
     return;
   }
   // check if artist exists
   const artistRepo = AppDataSource.getRepository(Artist);
   const artist = await artistRepo.findOne({
-    where: { artist_id: Number(artistId) },
+    where: { artist_id: artistId },
   });
   // Check if artist was found
   if (!artist) {
@@ -40,7 +40,7 @@ export const getArtistAlbums = async (req: Request, res: Response) => {
   const albumRepo = AppDataSource.getRepository(Album);
 
   const albums = await albumRepo.find({
-    where: { artist: { artist_id: Number(artistId) } },
+    where: { artist: { artist_id: artistId } },
     relations: ["artist"],
   });
 
