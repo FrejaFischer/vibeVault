@@ -26,9 +26,13 @@ Run command `make reset-database` reset your local database
 
 ### Frontend
 
+Starting locally without docker `npm run dev`. Access on http://localhost:3000
+
 When starting the frontend through docker, access it on http://localhost:8080
 
 ### Backend
+
+Starting locally without docker `npm run dev`. Access on http://localhost:5000
 
 When starting the backend through docker, access it on http://localhost:8080/api/
 
