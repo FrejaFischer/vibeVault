@@ -99,7 +99,7 @@ build_vibe_server:
     - npm install
     - npm run build
 
-# --- Deploy (Continuos Delivery) ---
+# --- Deployment (Continuos Delivery) ---
 deploy_client_to_render:
   stage: deploy
   image: curlimages/curl:latest
