@@ -1,10 +1,15 @@
 .merge_request_rule: &merge_request_rule
   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
+.main_branch_rule: &main_branch_rule
+  if: '$CI_COMMIT_BRANCH == "main"'
+
 stages:
   - static-test
   - dynamic-test
+  - deploy
 
+# --- Default pipeline run ---
 running_pipelines:
   stage: static-test
   rules:
@@ -20,6 +25,7 @@ running_pipelines:
   script:
     - echo "Running pipelines"
 
+# --- Static Tests ---
 lint_vibe_client:
   stage: static-test
   image: node:18
@@ -66,6 +72,7 @@ audit_vibe_server:
     - cd vibe-server
     - npm audit
 
+# --- Dynamic Tests ---
 build_vibe_client:
   stage: dynamic-test
   image: node:18
@@ -91,3 +98,15 @@ build_vibe_server:
     - cd vibe-server
     - npm install
     - npm run build
+
+# --- Deploy (manual CD) ---
+deploy_client_to_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  when: manual
+  allow_failure: false
+  rules:
+    - <<: *main_branch_rule
+  script:
+    - echo "Triggering client deployment to Render..."
+    - curl -X POST "$RENDER_DEPLOY_CLIENT_HOOK_URL"
