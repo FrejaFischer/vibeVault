@@ -13,6 +13,9 @@ export const AppDataSource = new DataSource({
   url: connectionString,
   synchronize: false,
   entities: [Album, Artist, Entry, User],
+  // ssl: {
+  //   rejectUnauthorized: false, // Need this config for local server to have connection to deployed db (NOT FOR DEPLOYED SERVER)
+  // },
 });
 
 // Solution for connecting without connection string
