@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { User } from "../entities/User";
 import { AppDataSource } from "../startup/data-source";
 import { validatePassword, validateFirstName, validateLastName, validateEmail } from "../validators/userValidator";
@@ -8,7 +8,7 @@ import { hashPassword } from "../utils/hashPassword";
 const userRepo = AppDataSource.getRepository(User);
 
 // POST a new user
-export const postUser = async (req: Request, res: Response) => {
+export const postUser: RequestHandler = async (req: Request, res: Response) => {
   const { first_name, last_name, email, password } = req.body || {};
 
   const validationErrors = [];
