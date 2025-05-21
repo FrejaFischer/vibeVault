@@ -99,7 +99,7 @@ build_vibe_server:
     - npm install
     - npm run build
 
-# --- Deploy (manual CD) ---
+# --- Deploy (Continuos Delivery) ---
 deploy_client_to_render:
   stage: deploy
   image: curlimages/curl:latest
@@ -107,6 +107,21 @@ deploy_client_to_render:
   allow_failure: false
   rules:
     - <<: *main_branch_rule
+      changes:
+        - vibe-client/**/*
   script:
     - echo "Triggering client deployment to Render..."
     - curl -X POST "$RENDER_DEPLOY_CLIENT_HOOK_URL"
+
+deploy_server_to_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  when: manual
+  allow_failure: false
+  rules:
+    - <<: *main_branch_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - echo "Triggering server deployment to Render..."
+    - curl -X POST "$RENDER_DEPLOY_SERVER_HOOK_URL"
