@@ -59,7 +59,7 @@ test)
     echo "====== SERVER || Test mode starting... ======"
     apk add --no-cache curl grep postgresql-client
 
-    PGPASSWORD="${DBPASSWORD}" psql -h postgres -U "${DBUSERNAME}" -d "${DBNAME}" -f /seeder/seed.sql
+    #PGPASSWORD="${DBPASSWORD}" psql -h postgres -U "${DBUSERNAME}" -d "${DBNAME}" -f /seeder/seed.sql
 
     sleep 10
 
