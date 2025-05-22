@@ -29,13 +29,13 @@ services:
 
   vibe-server:
     container_name: vibe-server
-    build:
-      context: ./vibe-server
-      dockerfile: Dockerfile
+    image: $CI_REGISTRY_IMAGE/vibe-server:latest
     depends_on:
       - postgres
+    env_file:
+      - "vibe-server/.env"
     environment:
-      DATABASE_URL: postgresql://app1:changethispassword@postgres:5432/vibevault # Development db - Server uses app1 db user
+      RTE: ${RTE}
     ports:
       - "5000:5000"
     networks:
@@ -43,12 +43,11 @@ services:
       - frontend
     volumes:
       - ./vibe-server/:/app
+      - ./seeder/seed.sql:/seeder/seed.sql
 
   vibe-client:
     container_name: vibe-client
-    build:
-      context: ./vibe-client
-      dockerfile: Dockerfile
+    image: $CI_REGISTRY_IMAGE/vibe-client:latest
     environment:
       RTE: ${RTE}
       VITE_API_URL: http://localhost:8080/api/
