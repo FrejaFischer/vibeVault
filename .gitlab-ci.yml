@@ -6,6 +6,7 @@
 
 stages:
   - static-test
+  - dynamic-build
   - dynamic-test
   - deploy
 
@@ -72,9 +73,9 @@ audit_vibe_server:
     - cd vibe-server
     - npm audit
 
-# --- Dynamic Tests ---
+# --- Dynamic Build ---
 build_vibe_client:
-  stage: dynamic-test
+  stage: dynamic-build
   image: node:18
   rules:
     - <<: *merge_request_rule
@@ -87,7 +88,7 @@ build_vibe_client:
     - npm run build
 
 build_vibe_server:
-  stage: dynamic-test
+  stage: dynamic-build
   image: node:18
   rules:
     - <<: *merge_request_rule
@@ -96,8 +97,28 @@ build_vibe_server:
   script:
     - echo "Building vibe-server"
     - cd vibe-server
-    - npm install
     - npm run build
+
+# --- Dynamic Tests ---
+runtime_test:
+  stage: dynamic-test
+  image: registry.gitlab.com/henrikstroem/composer:latest
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  #       - vibe-client/**/*
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p "$GITLAB_CI_TOKEN" "$CI_REGISTRY"
+  script:
+    - echo "Starting runtime test"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-client:latest" ./vibe-client
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-server:latest" ./vibe-server
+    - RTE=test docker-compose up --abort-on-container-exit --exit-code-from vibe-server
+    - docker push "$CI_REGISTRY_IMAGE/vibe-client:latest"
+    - docker push "$CI_REGISTRY_IMAGE/vibe-server:latest"
 
 # --- Deployment (Continuos Delivery) ---
 deploy_client_to_render:
