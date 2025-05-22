@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon --legacy-watch --exec ts-node --transpile-only index.ts",
     "build": "npm install && tsc",
+    "test": "npm install && tsc && node dist/index.js",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
