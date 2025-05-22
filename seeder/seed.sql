@@ -35,8 +35,8 @@ CREATE TABLE users
     user_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(55) NOT NULL,
     last_name VARCHAR(120) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
     deleted_at TIMESTAMPTZ
