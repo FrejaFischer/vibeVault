@@ -114,7 +114,6 @@ runtime_test:
     - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
   script:
     - echo "Starting runtime test"
-    - echo "$SERVER_ENV_FILE" > vibe-server/.env
     - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-client:latest" ./vibe-client
     - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-server:latest" ./vibe-server
     - RTE=test docker-compose up --abort-on-container-exit --exit-code-from vibe-server
