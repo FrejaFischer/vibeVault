@@ -9,7 +9,8 @@ import jwt from "jsonwebtoken";
  * @param res - Sends all entries for the user if token is valid, else sends error message
  */
 export const getEntries: RequestHandler = async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Get token from header
+  // const token = req.headers.authorization?.split(" ")[1]; // Get token from header
+  const token = req.cookies.token; // Read from HttpOnly cookie
   const SECRET_KEY = process.env.JWT_SECRET || "mysecretkey"; // Secret key from env file (a key that should be included in the token)
 
   // Check if there is a token
