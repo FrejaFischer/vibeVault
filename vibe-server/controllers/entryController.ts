@@ -1,20 +1,58 @@
 import { Request, Response, RequestHandler } from "express";
 import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
+import jwt from "jsonwebtoken";
 
+/**
+ * GET route for getting users entries (protected route)
+ * @param req - Needs authorization in the header, with valid token
+ * @param res - Sends all entries for the user if token is valid, else sends error message
+ */
 export const getEntries: RequestHandler = async (req: Request, res: Response) => {
-  const userId = 1;
-  // Get the Entry Entity (table)
-  const entryRepo = AppDataSource.getRepository(Entry);
-  // Find entries with that user_id
-  const entries = await entryRepo.find({
-    where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
-  });
-  // send reponse of entries
-  res.json({
-    count: entries.length,
-    results: entries,
-  });
+  const token = req.headers.authorization?.split(" ")[1]; // Get token from header
+  const SECRET_KEY = process.env.JWT_SECRET || "mysecretkey"; // Secret key from env file (a key that should be included in the token)
+
+  // Check if there is a token
+  if (!token) {
+    res.status(401).json({ error: "Access Denied" });
+    return;
+  }
+
+  try {
+    // Check if token is valid, throws error if not (e.g if expired or with wrong secret key)
+    const decoded = jwt.verify(token, SECRET_KEY) as jwt.JwtPayload;
+
+    // Check if user_id is in token and is valid type
+    if (!decoded.user_id || typeof decoded.user_id !== "number") {
+      res.status(401).json({ message: "Invalid token payload" });
+      return;
+    }
+    const userId = decoded.user_id; // user_id from the token
+
+    // Get the Entry Entity (table)
+    const entryRepo = AppDataSource.getRepository(Entry);
+
+    // Find entries with that user_id
+    const entries = await entryRepo.find({
+      where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
+    });
+
+    // send reponse of entries
+    res.json({
+      count: entries.length,
+      results: entries,
+      user: decoded,
+    });
+  } catch (err) {
+    // Token is expired
+    if (err instanceof Error && err.name === "TokenExpiredError") {
+      res.status(401).json({ error: "Token expired" });
+      return;
+    }
+    // Token is not valid
+    res.status(401).json({ error: "Invalid token" });
+    return;
+  }
 };
 
 export const getEntryById: RequestHandler = async (req: Request, res: Response) => {
