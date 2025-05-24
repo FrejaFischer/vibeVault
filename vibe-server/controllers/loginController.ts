@@ -44,6 +44,13 @@ export const postLogin: RequestHandler = async (req: Request, res: Response) => 
   // Create Json Web Token
   const token = jwt.sign({ user_id: user.user_id, email: user.email }, SECRET_KEY, { expiresIn: "1h" });
 
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false, // set to true in production (HTTPS)
+    sameSite: "strict",
+    maxAge: 3600000, // 1 hour
+  });
+
   // Send token
   res.json({ token });
 };
