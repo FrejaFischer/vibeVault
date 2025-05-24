@@ -4,10 +4,11 @@ import { AppDataSource } from "../startup/data-source";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Get the User Entity (table)
-const userRepo = AppDataSource.getRepository(User);
-
-// POST a new user
+/**
+ * POST route for the login
+ * @param req - Should include a body with email and password
+ * @param res - Sends token if user login is valid, else sends error message
+ */
 export const postLogin: RequestHandler = async (req: Request, res: Response) => {
   const SECRET_KEY = process.env.JWT_SECRET || "mysecretkey";
   const { email, password } = req.body;
@@ -22,6 +23,9 @@ export const postLogin: RequestHandler = async (req: Request, res: Response) => 
     res.status(400).json({ error: "Password is required and must be a string" });
     return;
   }
+
+  // Get the User Entity (table)
+  const userRepo = AppDataSource.getRepository(User);
 
   // Check if user exist (if users deleted_at is not empty, Typeorm exclude them automatically)
   const user = await userRepo.findOneBy({ email });
