@@ -1,0 +1,148 @@
+.merge_request_rule: &merge_request_rule
+  if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+.main_branch_rule: &main_branch_rule
+  if: '$CI_COMMIT_BRANCH == "main"'
+
+stages:
+  - static-test
+  - dynamic-build
+  - dynamic-test
+  - deploy
+
+# --- Default pipeline run ---
+running_pipelines:
+  stage: static-test
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - docker-compose.yml
+        - .gitlab-ci.yml
+        - Makefile
+        - Readme.md
+        - .gitignore
+        - seeder/**/*
+        - nginx/*
+  script:
+    - echo "Running pipelines"
+
+# --- Static Tests ---
+lint_vibe_client:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - cd vibe-client
+    - npm install eslint@9.21.0
+    - npx eslint
+
+lint_vibe_server:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - cd vibe-server
+    - npm install eslint@9.26.0
+    - npm run lint
+
+audit_vibe_client:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - cd vibe-client
+    - npm audit
+
+audit_vibe_server:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - cd vibe-server
+    - npm audit
+
+# --- Dynamic Build ---
+build_vibe_client:
+  stage: dynamic-build
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - echo "Building vibe-client"
+    - cd vibe-client
+    - npm install
+    - npm run build
+
+build_vibe_server:
+  stage: dynamic-build
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - echo "Building vibe-server"
+    - cd vibe-server
+    - npm run build
+
+# --- Dynamic Tests ---
+runtime_test:
+  stage: dynamic-test
+  image: registry.gitlab.com/henrikstroem/composer:latest
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/**/*
+  #       - vibe-client/**/*
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+  script:
+    - echo "Starting runtime test"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-client:latest" ./vibe-client
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/vibe-server:latest" ./vibe-server
+    - RTE=test docker-compose up --abort-on-container-exit --exit-code-from vibe-server
+    - docker push "$CI_REGISTRY_IMAGE/vibe-client:latest"
+    - docker push "$CI_REGISTRY_IMAGE/vibe-server:latest"
+
+# --- Deployment (Continuos Delivery) ---
+deploy_client_to_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  when: manual
+  allow_failure: false
+  rules:
+    - <<: *main_branch_rule
+      changes:
+        - vibe-client/**/*
+  script:
+    - echo "Triggering client deployment to Render..."
+    - curl -X POST "$RENDER_DEPLOY_CLIENT_HOOK_URL"
+
+deploy_server_to_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  when: manual
+  allow_failure: false
+  rules:
+    - <<: *main_branch_rule
+      changes:
+        - vibe-server/**/*
+  script:
+    - echo "Triggering server deployment to Render..."
+    - curl -X POST "$RENDER_DEPLOY_SERVER_HOOK_URL"

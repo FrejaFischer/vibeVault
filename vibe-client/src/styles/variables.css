@@ -12,6 +12,20 @@
 
   --color-primary: #a2a77f;
   --color-secondary: #06062d;
+
+  --color-blue-brand-100: #e6ebf4;
+
+  --color-neutral-brand-010: #ffffff;
+  --color-neutral-brand-100: #faf6f6;
+  --color-neutral-brand-150: #f0ebeb;
+  --color-neutral-brand-700: #5f5c6e;
+  --color-neutral-brand-900: #3d3b46;
+
+  --color-positive-brand-200: #b9e39c;
+  --color-positive-brand-400: #667e53;
+
+  --color-negative-brand-200: #fb8c98;
+  --color-negative-brand-400: #fa233b;
 }
 
 @layer base {
