@@ -53,6 +53,7 @@ case "${RTE}" in
 
 dev)
     echo "====== SERVER || Development mode starting... ======"
+    npm install
     npm run start
     ;;
 test)
