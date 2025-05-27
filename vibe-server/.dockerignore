@@ -1,0 +1,9 @@
+dist/
+
+Dockerfile
+
+.env
+
+node_modules/
+
+package-json-explained.txt
