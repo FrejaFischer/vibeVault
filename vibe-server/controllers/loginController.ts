@@ -10,7 +10,13 @@ import jwt from "jsonwebtoken";
  * @param res - Sends token if user login is valid, else sends error message
  */
 export const postLogin: RequestHandler = async (req: Request, res: Response) => {
-  const SECRET_KEY = process.env.JWT_SECRET || "mysecretkey";
+  // Check if .env file with token secret is available
+  if (!process.env.JWT_SECRET) {
+    res.status(500).json({ error: "Server error - Please contact us." });
+    return;
+  }
+
+  const SECRET_KEY = process.env.JWT_SECRET;
   const { email, password } = req.body;
 
   // Backend validation

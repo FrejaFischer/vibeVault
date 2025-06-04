@@ -9,10 +9,15 @@ import jwt from "jsonwebtoken";
  * @param res - Sends all entries for the user if token is valid, else sends error message
  */
 export const getEntries: RequestHandler = async (req: Request, res: Response) => {
-  // const token = req.headers.authorization?.split(" ")[1]; // Get token from header
-  const token = req.cookies.token; // Read from HttpOnly cookie
-  const SECRET_KEY = process.env.JWT_SECRET || "mysecretkey"; // Secret key from env file (a key that should be included in the token)
+  // Check if .env file with token secret is available
+  if (!process.env.JWT_SECRET) {
+    res.status(500).json({ error: "Server error - Please contact us." });
+    return;
+  }
+  const SECRET_KEY = process.env.JWT_SECRET; // Secret key from env file (a key that should be included in the token)
 
+  // Read from HttpOnly cookie
+  const token = req.cookies.token;
   // Check if there is a token
   if (!token) {
     res.status(401).json({ error: "Access Denied" });
