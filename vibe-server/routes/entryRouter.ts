@@ -4,6 +4,7 @@ import { createEntry, getEntries, getEntryById } from "../controllers/entryContr
 
 const entryRouter = Router();
 
+// Use verifyToken middleware to authenticate token before running the requests
 entryRouter.get("/", verifyToken, getEntries);
 entryRouter.post("/", createEntry);
 entryRouter.get("/:entry_id", getEntryById);
