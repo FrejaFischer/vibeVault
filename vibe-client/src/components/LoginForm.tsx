@@ -3,13 +3,6 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import InputGroup from "./InputGroup";
 
-/////
-// DONT WORK
-// TO DO:
-// 1. Gør det muligt at logge ind
-// 2. Få vist entries page, hvis man er logget ind
-/////
-
 const LoginForm = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
