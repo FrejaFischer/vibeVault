@@ -1,44 +1,26 @@
 import { Request, Response, RequestHandler } from "express";
 import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
-import jwt from "jsonwebtoken";
+import { AuthenticatedRequest } from "../middleware/verifyToken";
 
 /**
  * GET route for getting users entries (protected route)
- * @param req - Needs authorization in the header, with valid token
+ * @param req - Needs authorization with valid token in cookie. AuthenticatedRequest checks that beforehand.
  * @param res - Sends all entries for the user if token is valid, else sends error message
  */
-export const getEntries: RequestHandler = async (req: Request, res: Response) => {
-  // Check if .env file with token secret is available
-  if (!process.env.JWT_SECRET) {
-    res.status(500).json({ error: "Server error - Please contact us." });
-    return;
-  }
-  const SECRET_KEY = process.env.JWT_SECRET; // Secret key from env file (a key that should be included in the token)
-
-  // Read from HttpOnly cookie
-  const token = req.cookies.token;
-  // Check if there is a token
-  if (!token) {
-    res.status(401).json({ error: "Access Denied" });
+export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
+  // Set the users id from token in request
+  const userId = req.userId;
+  if (!userId) {
+    res.status(500).json({ error: "User ID missing after authentication" });
     return;
   }
 
   try {
-    // Check if token is valid, throws error if not (e.g if expired or with wrong secret key)
-    const decoded = jwt.verify(token, SECRET_KEY) as jwt.JwtPayload;
-
-    // Check if user_id is in token and is valid type
-    if (!decoded.user_id || typeof decoded.user_id !== "number") {
-      res.status(401).json({ message: "Invalid token payload" });
-      return;
-    }
-    const userId = decoded.user_id; // user_id from the token
-
     // Get the Entry Entity (table)
     const entryRepo = AppDataSource.getRepository(Entry);
 
-    // Find entries with that user_id
+    // Find entries with the user_id
     const entries = await entryRepo.find({
       where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
     });
@@ -47,16 +29,9 @@ export const getEntries: RequestHandler = async (req: Request, res: Response) =>
     res.json({
       count: entries.length,
       results: entries,
-      user: decoded,
     });
-  } catch (err) {
-    // Token is expired
-    if (err instanceof Error && err.name === "TokenExpiredError") {
-      res.status(401).json({ error: "Token expired" });
-      return;
-    }
-    // Token is not valid
-    res.status(401).json({ error: "Invalid token" });
+  } catch {
+    res.status(500).json({ message: "Failed to fetch entries" });
     return;
   }
 };

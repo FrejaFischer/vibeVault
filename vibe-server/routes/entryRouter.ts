@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { verifyToken } from "../middleware/verifyToken";
 import { createEntry, getEntries, getEntryById } from "../controllers/entryController";
 
 const entryRouter = Router();
 
-entryRouter.get("/", getEntries);
+entryRouter.get("/", verifyToken, getEntries);
 entryRouter.post("/", createEntry);
 entryRouter.get("/:entry_id", getEntryById);
 
