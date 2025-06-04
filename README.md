@@ -34,6 +34,10 @@ When starting the frontend through docker, access it on http://localhost:8080
 
 When starting the backend through docker, access it on http://localhost:8080/api/
 
+## Run run-time-test locally
+
+Run `make docker-compose-test`
+
 ## Authors
 
 Emma Hamdorf-Baunsgaard & Freja Fischer Nielsen
