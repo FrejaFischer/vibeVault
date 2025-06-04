@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { axiosInstance } from "../services/api-client";
 
-// This a React Functional Component that wraps our app and provides access to the AuthContext
+// This a React Functional Component (FC) that wraps our app and provides access to the AuthContext
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // True if valid token
+  const [loading, setLoading] = useState(true); // Loading for signaling if auth request is finished
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // await axios.get("http://localhost:5000/auth/check", { withCredentials: true });
+        // Send request to check if token is available and valid in users cookie
         await axiosInstance.get("/auth/check", { withCredentials: true });
         setIsAuthenticated(true);
+        setLoading(false);
       } catch {
+        // If no token found or is invalid, then the request will respond with 401, and this will happen:
         setIsAuthenticated(false);
+        setLoading(false);
       }
     };
     checkAuth();
@@ -30,5 +34,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthenticated(false);
   };
 
-  return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>{children}</AuthContext.Provider>;
 };
