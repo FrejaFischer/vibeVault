@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 /**
  * GET route for checking authentication
  * @param req - Should include a token inside a cookie
- * @param res - Sends teh decoded user if token in cookie is valid, else sends error message
+ * @param res - Sends the decoded user if token in cookie is valid, else sends error message
  */
 export const getAuth: RequestHandler = async (req: Request, res: Response) => {
   // Check if .env file with token secret is available

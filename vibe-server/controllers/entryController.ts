@@ -5,7 +5,7 @@ import { AuthenticatedRequest } from "../middleware/verifyToken";
 
 /**
  * GET route for getting users entries (protected route)
- * @param req - Needs authorization with valid token in cookie. AuthenticatedRequest checks that beforehand.
+ * @param req - Needs a valid token with user id in cookie. AuthenticatedRequest checks all this beforehand.
  * @param res - Sends all entries for the user if token is valid, else sends error message
  */
 export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
