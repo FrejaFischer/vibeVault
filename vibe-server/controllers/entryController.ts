@@ -9,12 +9,7 @@ import { AuthenticatedRequest } from "../middleware/verifyToken";
  * @param res - Sends all entries for the user if token is valid, else sends error message
  */
 export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
-  // Set the users id from token in request
-  const userId = req.userId;
-  if (!userId) {
-    res.status(500).json({ error: "User ID missing after authentication" });
-    return;
-  }
+  const userId = req.userId; // Set the users id from token in request
 
   try {
     // Get the Entry Entity (table)
