@@ -11,6 +11,7 @@
   "dependencies": {
     "@eslint/js": "^9.26.0",            // Eslint
     "bcrypt": "^6.0.0",                 // For hashing passwords
+    "cookie-parser": "^1.4.7",          // For parsing cookies, where tokens are in
     "cors": "^2.8.5",                   // Package for implementing CORS
     "dotenv": "^16.5.0",                // For getting .env files
     "express": "^5.1.0"                 // Node.js web application framework. Handles HTTP Requests, Routing System and more.
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",                     // Type definition package that adds the missing TypeScript support for bcrypt
+    "@types/cookie-parser": "^1.4.8",              // Type definition package that adds the missing TypeScript support for cookie-parser
     "@types/cors": "^2.8.18",                      // Type definition package that adds the missing TypeScript support for Cors
     "@types/express": "^5.0.1",                    // Type definition package that adds the missing TypeScript support for Express
     "@types/jsonwebtoken": "^9.0.9",               // Type definition package that adds the missing TypeScript supprt for jsonwebtoken
