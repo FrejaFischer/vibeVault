@@ -1,20 +1,34 @@
 import { Request, Response, RequestHandler } from "express";
 import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
+import { AuthenticatedRequest } from "../middleware/verifyToken";
 
-export const getEntries: RequestHandler = async (req: Request, res: Response) => {
-  const userId = 1;
-  // Get the Entry Entity (table)
-  const entryRepo = AppDataSource.getRepository(Entry);
-  // Find entries with that user_id
-  const entries = await entryRepo.find({
-    where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
-  });
-  // send reponse of entries
-  res.json({
-    count: entries.length,
-    results: entries,
-  });
+/**
+ * GET route for getting users entries (protected route)
+ * @param req - Needs a valid token with user id in cookie. AuthenticatedRequest checks all this beforehand.
+ * @param res - Sends all entries for the user if token is valid, else sends error message
+ */
+export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
+  const userId = req.userId; // Set the users id from token in request
+
+  try {
+    // Get the Entry Entity (table)
+    const entryRepo = AppDataSource.getRepository(Entry);
+
+    // Find entries with the user_id
+    const entries = await entryRepo.find({
+      where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
+    });
+
+    // send reponse of entries
+    res.json({
+      count: entries.length,
+      results: entries,
+    });
+  } catch {
+    res.status(500).json({ message: "Failed to fetch entries" });
+    return;
+  }
 };
 
 export const getEntryById: RequestHandler = async (req: Request, res: Response) => {

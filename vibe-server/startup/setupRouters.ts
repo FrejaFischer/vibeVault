@@ -5,6 +5,8 @@ import entryRouter from "../routes/entryRouter";
 import artistRouter from "../routes/artistRouter";
 import trackRouter from "../routes/trackRouter";
 import userRouter from "../routes/userRouter";
+import loginRouter from "../routes/loginRouter";
+import authRouter from "../routes/authRouter";
 
 // Setup all our routes / endpoints
 const setupRouters = (app: Application) => {
@@ -16,6 +18,8 @@ const setupRouters = (app: Application) => {
   app.use("/entries", entryRouter); // Endpoint for getting all entries
   //app.use("/users/:user_id/entries/:entry_id", entryRouter); // Endpoint for getting a specific entry
   app.use("/users", userRouter); // Endpoint for users (insert + get by id)
+  app.use("/login", loginRouter); // Endpoint for login
+  app.use("/auth/check", authRouter); // Endpoint for checking authentication in server
 };
 
 export default setupRouters;

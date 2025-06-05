@@ -51,6 +51,18 @@ lint_vibe_server:
     - npm install eslint@9.26.0
     - npm run lint
 
+lint_entrypoint_script:
+  stage: static-test
+  image: node:18
+  rules:
+    - <<: *merge_request_rule
+      changes:
+        - vibe-server/entrypoint.sh
+  script:
+    - cd vibe-server
+    - npm install shellcheck
+    - npx shellcheck entrypoint.sh
+
 audit_vibe_client:
   stage: static-test
   image: node:18

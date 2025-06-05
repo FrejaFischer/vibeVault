@@ -135,8 +135,8 @@ ALTER TABLE entry_track
    Populate Tables
 ********************************************************************************/
 INSERT INTO users (first_name, last_name, email, password, updated_at, deleted_at) VALUES
-    (N'John', N'Doe', 'john.doe@example.com', 'hashed_password1', NOW(), NULL),
-    (N'Jane', N'Smith', 'jane.smith@example.com', 'hashed_password2', NOW(), NULL);
+    (N'John', N'Doe', 'john.doe@example.com', '$2b$10$YnanhurWgOErw5x4d9D0XuO98FXPt8V2SEPX5C3DC1/mY1pkei8hm', NOW(), NULL),
+    (N'Jane', N'Smith', 'jane.smith@example.com', '$2b$10$YnanhurWgOErw5x4d9D0XuO98FXPt8V2SEPX5C3DC1/mY1pkei8hm', NOW(), NULL);
 
 INSERT INTO artist (artist_id, name) VALUES
     (1, N'AC/DC'),
