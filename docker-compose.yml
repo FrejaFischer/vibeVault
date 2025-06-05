@@ -23,6 +23,7 @@ services:
       - ./vibe-server/.env
     environment:
       RTE: ${RTE}
+      JWT_SECRET: ${JWT_SECRET:-changeme}
       DATABASE_URL: postgresql://app1:changethispassword@postgres:5432/vibevault
     ports:
       - "5000:5000"
