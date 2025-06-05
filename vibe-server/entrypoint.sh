@@ -38,7 +38,7 @@ post_script() {
     DATA=$2
     EXPECTED_STATUS=$4
 
-    if [[ "$1" == "login" ]]; then
+    if [ "$1" = "login" ]; then
         # Save cookies after login in cookie jar file, if request is to login
         RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             -H "Content-Type: application/json" \
