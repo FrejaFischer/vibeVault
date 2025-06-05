@@ -1,8 +1,8 @@
 import { Request, Response, RequestHandler } from "express";
-import { User } from "../entities/User";
-import { AppDataSource } from "../startup/data-source";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { User } from "../entities/User";
+import { AppDataSource } from "../startup/data-source";
 
 /**
  * POST route for the login
@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
  * @param res - Sends token if user login is valid, else sends error message
  */
 export const postLogin: RequestHandler = async (req: Request, res: Response) => {
-  // Check if .env file with token secret is available
+  // Check if token secret is available in env
   if (!process.env.JWT_SECRET) {
     res.status(500).json({ error: "Server error - Please contact us." });
     return;

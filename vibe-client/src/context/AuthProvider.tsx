@@ -10,7 +10,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Send request to check if token is available and valid in users cookie
+        // Send request to check if token is available and valid in users cookie.
         await axiosInstance.get("/auth/check", { withCredentials: true });
         setIsAuthenticated(true);
         setLoading(false);
@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthenticated(true);
   };
 
-  // DONT WORK YET
+  // LOGIN DONT WORK YET - just delete cookie with token manual to logout for now
   const logout = async () => {
     await axiosInstance.get("/logout", { withCredentials: true });
     setIsAuthenticated(false);
@@ -36,3 +36,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   return <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>{children}</AuthContext.Provider>;
 };
+
+// withCredentials = true - send cookies with the request. So the token come along as well.

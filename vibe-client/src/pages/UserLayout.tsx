@@ -1,14 +1,14 @@
+import { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import UserNav from "../components/UserNav";
 import Header from "../components/Header";
-import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const UserLayout = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Check if user is logged in (has token in cookie) - if not redirect to landingpage
+  // Check if user is logged in (has valid token in cookie) - if not redirect to landingpage
   useEffect(() => {
     if (!auth?.loading && !auth?.isAuthenticated) {
       navigate("/", { replace: true });

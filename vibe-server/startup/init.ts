@@ -18,7 +18,7 @@ const corsOptions = {
       callback(new Error("CORS_NOT_ALLOWED"));
     }
   },
-  credentials: true,
+  credentials: true, // Accepts cookies being sent along the request
 };
 
 const init = (app: Application) => {

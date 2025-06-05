@@ -1,14 +1,14 @@
-import AuthNav from "../components/AuthNav";
-import { Outlet, useNavigate } from "react-router";
-import Header from "../components/Header";
 import { useContext, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router";
+import AuthNav from "../components/AuthNav";
+import Header from "../components/Header";
 import { AuthContext } from "../context/AuthContext";
 
 const AuthLayout = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Check if user is logged in (has token in cookie) - if true redirect to entries page
+  // Check if user is logged in (has valid token in cookie) - if true redirect to entries page
   useEffect(() => {
     if (!auth?.loading && auth?.isAuthenticated) {
       navigate("/entries", { replace: true });
