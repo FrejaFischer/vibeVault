@@ -51,12 +51,12 @@ export const postLogin: RequestHandler = async (req: Request, res: Response) => 
   const token = jwt.sign({ user_id: user.user_id, email: user.email }, SECRET_KEY, { expiresIn: "1h" });
 
   res.cookie("token", token, {
-    httpOnly: true,
-    secure: false, // set to true in production (HTTPS)
-    sameSite: "strict",
-    maxAge: 3600000, // 1 hour
+    httpOnly: true, // only accessible from server
+    secure: true, // only send over HTTPS
+    sameSite: "none", // CORS rules decide who can request
+    maxAge: 3600000, // 1 hour from now
+    expires: new Date(Date.now() + 3600000), // 1 hour from now
   });
 
-  // Send token
-  res.json({ token });
+  res.status(200).json({ message: "Login successful", user: { email: user.email } });
 };

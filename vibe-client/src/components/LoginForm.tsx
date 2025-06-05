@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import InputGroup from "./InputGroup";
+import { AxiosError } from "axios";
 
 const LoginForm = () => {
   const auth = useContext(AuthContext);
@@ -17,8 +18,24 @@ const LoginForm = () => {
       await auth?.login(email, password);
       navigate("/entries"); // Redirect after successful login
     } catch (err) {
-      setError("Invalid username or password");
-      console.log(err);
+      const error = err as AxiosError<{ error: string }>;
+
+      if (error.response) {
+        const status = error.response.status;
+        const serverMessage = error.response.data?.error;
+
+        if (status === 400) {
+          setError(serverMessage ?? "Validation error");
+        } else if (status === 401) {
+          setError("Invalid credentials");
+        } else if (status === 403 || status === 500) {
+          setError("Server error - Please contact us");
+          console.error(serverMessage ?? "Server error");
+        }
+      } else {
+        console.error(err);
+        setError("Something went wrong. Please try again.");
+      }
     }
   };
 
