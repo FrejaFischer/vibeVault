@@ -5,6 +5,5 @@ const loginRouter = Router();
 
 // POST route for users
 loginRouter.post("/", postLogin);
-console.log("loginRouter");
 
 export default loginRouter;

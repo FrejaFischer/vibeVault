@@ -6,8 +6,8 @@ const entryRouter = Router();
 
 // Use verifyToken middleware to authenticate token before running the requests
 entryRouter.get("/", verifyToken, getEntries);
-entryRouter.post("/", createEntry);
-entryRouter.get("/:entry_id", getEntryById);
+entryRouter.post("/", createEntry); // TO DO - add verifyToken
+entryRouter.get("/:entry_id", getEntryById); // TO DO - add verifyToken
 
 // import { Router, Request, Response } from "express";
 // import { Entry } from "../entities/Entry";
