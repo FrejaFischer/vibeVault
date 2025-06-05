@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { createEntry, getEntries, getEntryById } from "../controllers/entryController";
+import { createEntry, getEntries, getEntryById, updateEntry } from "../controllers/entryController";
 
 const entryRouter = Router();
 
 entryRouter.get("/", getEntries);
 entryRouter.post("/", createEntry);
+entryRouter.put("/", updateEntry);
 entryRouter.get("/:entry_id", getEntryById);
 
 // import { Router, Request, Response } from "express";
