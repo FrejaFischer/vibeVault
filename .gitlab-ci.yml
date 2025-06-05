@@ -59,6 +59,7 @@ lint_entrypoint_script:
       changes:
         - vibe-server/entrypoint.sh
   script:
+    - cd vibe-server
     - npm install shellcheck
     - npx shellcheck entrypoint.sh
 
