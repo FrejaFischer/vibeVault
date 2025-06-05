@@ -59,7 +59,7 @@ CREATE TABLE artist
 
 CREATE TABLE entry
 (
-    entry_id INT NOT NULL,
+    entry_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(120) NOT NULL,
     start_period TIMESTAMP NOT NULL,
@@ -69,8 +69,8 @@ CREATE TABLE entry
     description VARCHAR(600),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    deleted_at TIMESTAMPTZ,
-    CONSTRAINT entry_pkey PRIMARY KEY  (entry_id)
+    deleted_at TIMESTAMPTZ
+
 );
 
 CREATE TABLE entry_track
