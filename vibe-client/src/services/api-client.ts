@@ -8,7 +8,7 @@ export interface Response<T> {
 }
 
 // Connection to the API
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
