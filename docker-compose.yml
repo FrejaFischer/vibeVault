@@ -19,8 +19,6 @@ services:
     image: registry.gitlab.com/frejem/vibevault/vibe-server:latest
     depends_on:
       - postgres
-    env_file:
-      - ./vibe-server/.env
     environment:
       RTE: ${RTE}
       JWT_SECRET: ${JWT_SECRET}
