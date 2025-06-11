@@ -23,6 +23,8 @@ export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res:
     });
 
     // send reponse of entries
+
+    //only show id, title, start date, trackcount
     res.json({
       count: entries.length,
       results: entries,

@@ -1,5 +1,5 @@
 export interface Entry {
-    entryId?: number
+    entry_id?: number
     title: string
     start_period: string
     end_period: string | null

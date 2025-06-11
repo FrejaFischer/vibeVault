@@ -30,7 +30,9 @@ const UserLayout = () => {
       <Header>
         <UserNav />
       </Header>
+      <main className="px-2 mx-auto max-w-[1156px] w-full">
       <Outlet />
+      </main>
     </>
   );
 };
