@@ -7,6 +7,7 @@ import trackRouter from "../routes/trackRouter";
 import userRouter from "../routes/userRouter";
 import loginRouter from "../routes/loginRouter";
 import authRouter from "../routes/authRouter";
+import logoutRouter from "../routes/logoutRouter";
 
 // Setup all our routes / endpoints
 const setupRouters = (app: Application) => {
@@ -20,6 +21,7 @@ const setupRouters = (app: Application) => {
   app.use("/users", userRouter); // Endpoint for users (insert + get by id)
   app.use("/login", loginRouter); // Endpoint for login
   app.use("/auth/check", authRouter); // Endpoint for checking authentication in server
+  app.use("/logout", logoutRouter); // Endpoint for logout
 };
 
 export default setupRouters;
