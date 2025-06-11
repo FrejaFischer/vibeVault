@@ -20,6 +20,7 @@ export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res:
     // Find entries with the user_id
     const entries = await entryRepo.find({
       where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
+      relations: ["entryTracks"],
     });
 
     // send reponse of entries
@@ -27,7 +28,13 @@ export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res:
     //only show id, title, start date, trackcount
     res.json({
       count: entries.length,
-      results: entries,
+      results: entries.map(entry => ({
+        id: entry.entry_id,
+        title: entry.title,
+        start_period: entry.start_period,
+        cover_image: entry.cover_image,
+        trackcount: entry.entryTracks.length,
+      })),
     });
   } catch {
     res.status(500).json({ message: "Failed to fetch entries" });
