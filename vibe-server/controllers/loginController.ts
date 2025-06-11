@@ -52,9 +52,9 @@ export const postLogin: RequestHandler = async (req: Request, res: Response) => 
 
   let secure = true;
   if (process.env.RTE) {
-    const isProduction = process.env.RTE === "test";
+    const isTest = process.env.RTE === "test";
 
-    if (isProduction) {
+    if (isTest) {
       secure = false;
     }
   }
