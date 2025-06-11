@@ -1,8 +1,8 @@
 import { Request, Response, RequestHandler } from "express";
 
 /**
- * POST route for the logout
- * @param res - Sends 200 succes message if succes
+ * POST route for logout - deletes cookie
+ * @param res - Sends status code 200, and a succes message
  */
 export const postLogout: RequestHandler = async (req: Request, res: Response) => {
   let secure = true;
