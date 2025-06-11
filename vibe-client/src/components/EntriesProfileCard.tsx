@@ -1,11 +1,13 @@
 interface Props {
-  className?: string
+  className?: string;
 }
 
-const EntriesProfileCard = ({className}: Props) => {
+const EntriesProfileCard = ({ className }: Props) => {
   return (
-    <div className={className}>EntriesProfileCard</div>
-  )
-}
+    <div className={className}>
+      <article className="w-full border-2 border-neutral-brand-900 rounded-lg">EntriesProfileCard</article>
+    </div>
+  );
+};
 
-export default EntriesProfileCard
+export default EntriesProfileCard;
