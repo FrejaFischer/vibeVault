@@ -29,7 +29,7 @@ export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res:
     res.json({
       count: entries.length,
       results: entries.map(entry => ({
-        id: entry.entry_id,
+        entry_id: entry.entry_id,
         title: entry.title,
         start_period: entry.start_period,
         cover_image: entry.cover_image,
@@ -42,8 +42,9 @@ export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res:
   }
 };
 
-export const getEntryById: RequestHandler = async (req: Request, res: Response) => {
+export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
   const entryId = Number(req.params.entry_id);
+  const userId = req.userId;
 
   if (isNaN(entryId)) {
     res.status(400).json({ error: "Invalid entry_id" });
@@ -59,6 +60,11 @@ export const getEntryById: RequestHandler = async (req: Request, res: Response) 
 
   if (!entry) {
     res.status(404).json({ error: "Entry not found" });
+    return;
+  }
+
+  if (entry.user_id !== userId) {
+    res.status(401).json({ error: "Access denied" });
     return;
   }
 

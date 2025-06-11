@@ -8,7 +8,7 @@ const entryRouter = Router();
 entryRouter.get("/", verifyToken, getEntries);
 entryRouter.post("/", createEntry); // TO DO - add verifyToken
 entryRouter.put("/", updateEntry);
-entryRouter.get("/:entry_id", getEntryById); // TO DO - add verifyToken
+entryRouter.get("/:entry_id", verifyToken, getEntryById); // TO DO - add verifyToken
 
 // import { Router, Request, Response } from "express";
 // import { Entry } from "../entities/Entry";
