@@ -12,7 +12,6 @@ export const postLogout: RequestHandler = async (req: Request, res: Response) =>
     if (isTest) {
       secure = false;
     }
-    console.log("logout", secure);
   }
 
   // Clear the JWT cookie
