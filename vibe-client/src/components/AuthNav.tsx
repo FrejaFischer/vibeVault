@@ -4,7 +4,7 @@ const AuthNav = () => {
   return (
     <>
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/">Login</NavLink>
       </li>
       <li>
         <NavLink to="/signup">Signup</NavLink>
