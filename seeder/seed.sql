@@ -4273,25 +4273,25 @@ INSERT INTO track (track_id, name, album_id) VALUES
     (3502, N'Quintet for Horn, Violin', 345),
     (3503, N'Koyaanisqatsi', 347);
 
-INSERT INTO entry (user_id, title, start_period, end_period, playlist_link, cover_image, description, updated_at, deleted_at) VALUES
-    (1, N'Music', '2025-05-01 00:00:00', NULL, 'https://example.com/music_playlist', 'cover_image_music.jpg', 'A collection of various music tracks.', NOW(), NULL),
-    (1, N'Movies', '2025-05-01 00:00:00', NULL, 'https://example.com/movies_playlist', 'cover_image_movies.jpg', 'A variety of movies from different genres.', NOW(), NULL),
-    (1, N'TV Shows', '2025-05-01 00:00:00', NULL, 'https://example.com/tv_shows_playlist', 'cover_image_tv_shows.jpg', 'Popular TV shows to binge-watch.', NOW(), NULL),
-    (1, N'Audiobooks', '2025-05-01 00:00:00', NULL, 'https://example.com/audiobooks_playlist', 'cover_image_audiobooks.jpg', 'A selection of audiobooks for easy listening.', NOW(), NULL),
-    (1, N'90’s Music', '2025-05-01 00:00:00', NULL, 'https://example.com/90s_music_playlist', 'cover_image_90s_music.jpg', 'The best music from the 90’s era.', NOW(), NULL),
-    (1, N'Audiobooks', '2025-05-01 00:00:00', NULL, 'https://example.com/audiobooks_playlist_2', 'cover_image_audiobooks_2.jpg', 'Another collection of great audiobooks.', NOW(), NULL),
-    (1, N'Movies', '2025-05-01 00:00:00', NULL, 'https://example.com/movies_playlist_2', 'cover_image_movies_2.jpg', 'Another selection of fantastic movies.', NOW(), NULL),
-    (1, N'Music', '2025-05-01 00:00:00', NULL, 'https://example.com/music_playlist_2', 'cover_image_music_2.jpg', 'Another round of music tracks to enjoy.', NOW(), NULL),
-    (1, N'Music Videos', '2025-05-01 00:00:00', NULL, 'https://example.com/music_videos_playlist', 'cover_image_music_videos.jpg', 'Music videos for your entertainment.', NOW(), NULL),
-    (2, N'TV Shows', '2025-05-01 00:00:00', NULL, 'https://example.com/tv_shows_playlist_2', 'cover_image_tv_shows_2.jpg', 'More TV shows for endless entertainment.', NOW(), NULL),
-    (2, N'Brazilian Music', '2025-05-01 00:00:00', NULL, 'https://example.com/brazilian_music_playlist', 'cover_image_brazilian_music.jpg', 'Traditional and modern Brazilian music hits.', NOW(), NULL),
-    (2, N'Classical', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_playlist', 'cover_image_classical.jpg', 'A beautiful selection of classical music.', NOW(), NULL),
-    (2, N'Classical 101 - Deep Cuts', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_deep_cuts_playlist', 'cover_image_classical_101_deep_cuts.jpg', 'For the classical music enthusiast, deep cuts and rarities.', NOW(), NULL),
-    (2, N'Classical 101 - Next Steps', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_next_steps_playlist', 'cover_image_classical_101_next_steps.jpg', 'Take your classical music knowledge to the next level.', NOW(), NULL),
-    (2, N'Classical 101 - The Basics', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_basics_playlist', 'cover_image_classical_101_basics.jpg', 'The basics of classical music for new listeners.', NOW(), NULL),
-    (2, N'Grunge', '2025-05-01 00:00:00', NULL, 'https://example.com/grunge_playlist', 'cover_image_grunge.jpg', 'Grunge music from the 90s and beyond.', NOW(), NULL),
-    (2, N'Heavy Metal Classic', '2025-05-01 00:00:00', NULL, 'https://example.com/heavy_metal_classic_playlist', 'cover_image_heavy_metal_classic.jpg', 'Heavy metal music for true rock lovers.', NOW(), NULL),
-    (2, N'On-The-Go 1', '2025-05-01 00:00:00', NULL, 'https://example.com/on_the_go_playlist', 'cover_image_on_the_go.jpg', 'Music for when you are on the go!', NOW(), NULL);
+INSERT INTO entry (entry_id, user_id, title, start_period, end_period, playlist_link, cover_image, description, updated_at, deleted_at) VALUES
+    (1, 1, N'Music', '2025-05-01 00:00:00', NULL, 'https://example.com/music_playlist', 'cover_image_music.jpg', 'A collection of various music tracks.', NOW(), NULL),
+    (2, 1, N'Movies', '2025-05-01 00:00:00', NULL, 'https://example.com/movies_playlist', 'cover_image_movies.jpg', 'A variety of movies from different genres.', NOW(), NULL),
+    (3, 1, N'TV Shows', '2025-05-01 00:00:00', NULL, 'https://example.com/tv_shows_playlist', 'cover_image_tv_shows.jpg', 'Popular TV shows to binge-watch.', NOW(), NULL),
+    (4, 1, N'Audiobooks', '2025-05-01 00:00:00', NULL, 'https://example.com/audiobooks_playlist', 'cover_image_audiobooks.jpg', 'A selection of audiobooks for easy listening.', NOW(), NULL),
+    (5, 1, N'90’s Music', '2025-05-01 00:00:00', NULL, 'https://example.com/90s_music_playlist', 'cover_image_90s_music.jpg', 'The best music from the 90’s era.', NOW(), NULL),
+    (6, 1, N'Audiobooks', '2025-05-01 00:00:00', NULL, 'https://example.com/audiobooks_playlist_2', 'cover_image_audiobooks_2.jpg', 'Another collection of great audiobooks.', NOW(), NULL),
+    (7, 1, N'Movies', '2025-05-01 00:00:00', NULL, 'https://example.com/movies_playlist_2', 'cover_image_movies_2.jpg', 'Another selection of fantastic movies.', NOW(), NULL),
+    (8, 1, N'Music', '2025-05-01 00:00:00', NULL, 'https://example.com/music_playlist_2', 'cover_image_music_2.jpg', 'Another round of music tracks to enjoy.', NOW(), NULL),
+    (9, 1, N'Music Videos', '2025-05-01 00:00:00', NULL, 'https://example.com/music_videos_playlist', 'cover_image_music_videos.jpg', 'Music videos for your entertainment.', NOW(), NULL),
+    (10, 2, N'TV Shows', '2025-05-01 00:00:00', NULL, 'https://example.com/tv_shows_playlist_2', 'cover_image_tv_shows_2.jpg', 'More TV shows for endless entertainment.', NOW(), NULL),
+    (11, 2, N'Brazilian Music', '2025-05-01 00:00:00', NULL, 'https://example.com/brazilian_music_playlist', 'cover_image_brazilian_music.jpg', 'Traditional and modern Brazilian music hits.', NOW(), NULL),
+    (12, 2, N'Classical', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_playlist', 'cover_image_classical.jpg', 'A beautiful selection of classical music.', NOW(), NULL),
+    (13, 2, N'Classical 101 - Deep Cuts', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_deep_cuts_playlist', 'cover_image_classical_101_deep_cuts.jpg', 'For the classical music enthusiast, deep cuts and rarities.', NOW(), NULL),
+    (14, 2, N'Classical 101 - Next Steps', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_next_steps_playlist', 'cover_image_classical_101_next_steps.jpg', 'Take your classical music knowledge to the next level.', NOW(), NULL),
+    (15, 2, N'Classical 101 - The Basics', '2025-05-01 00:00:00', NULL, 'https://example.com/classical_101_basics_playlist', 'cover_image_classical_101_basics.jpg', 'The basics of classical music for new listeners.', NOW(), NULL),
+    (16, 2, N'Grunge', '2025-05-01 00:00:00', NULL, 'https://example.com/grunge_playlist', 'cover_image_grunge.jpg', 'Grunge music from the 90s and beyond.', NOW(), NULL),
+    (17, 2, N'Heavy Metal Classic', '2025-05-01 00:00:00', NULL, 'https://example.com/heavy_metal_classic_playlist', 'cover_image_heavy_metal_classic.jpg', 'Heavy metal music for true rock lovers.', NOW(), NULL),
+    (18, 2, N'On-The-Go 1', '2025-05-01 00:00:00', NULL, 'https://example.com/on_the_go_playlist', 'cover_image_on_the_go.jpg', 'Music for when you are on the go!', NOW(), NULL);
 
 
 INSERT INTO entry_track (entry_id, track_id) VALUES
