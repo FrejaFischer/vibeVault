@@ -30,7 +30,7 @@ const EntryPage = () => {
       </div>
       <div className="flex flex-col col-span-2 gap-2.5 md:flex-row md:gap-4 mb-7 md:mb-0">
         <Button text="Edit entry" className="h-fit w-full md:w-fit" version="ghost" icon={<SquarePen />} />
-        <Button text="Create playlist" className="h-fit w-full md:w-fit" icon={<Plus />} />
+        <Button text="Add song" className="h-fit w-full md:w-fit" icon={<Plus />} />
       </div>
       <div className="col-span-2">
         <EntryTracks entry_id={Number(entry.entry_id)} />
