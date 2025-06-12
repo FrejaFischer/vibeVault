@@ -1,15 +1,15 @@
 import LoginForm from "../components/LoginForm";
-// import VinylsGraphic from "../components/VinylsGraphic";
 
 const Landing = () => {
   return (
-    <main className="mx-5 my-10 md:my-10 flex justify-center">
-      <div className="max-w-6xl flex flex-col gap-6 xs:grid xs:grid-cols-2 xs:grid-rows-2 xs:gap-1 sm:grid-cols-7 sm:gap-4 md:mx-12 lg:grid-cols-12 lg:gap-5">
-        <h1 className="text-4xl font-light flex flex-col h-fit gap-1 xs:col-start-1 xs:row-1 xs:self-end sm:col-span-3 lg:text-6xl lg:col-start-1 lg:col-span-5">
+    <main className="px-5 py-10 md:px-10 flex justify-center relative flex-1">
+      <img src="landing.jpg" alt="" className="hidden md:block md:absolute md:top-0 md:bottom-0 md:w-full md:h-full md:overflow-hidden" />
+      <img src="landing_mobile.jpg" alt="" className="md:hidden absolute top-0 bottom-0 w-full h-full overflow-hidden" />
+      <div className=" w-full z-1 flex flex-col gap-6 xs:grid xs:grid-cols-2 xs:grid-rows-1 xs:gap-1 lg:grid-cols-3">
+        <h1 className="text-2xl my-2 font-light font-display flex flex-col h-fit gap-1 xs:col-start-1 xs:row-1 xs:self-center lg:col-span-2">
           Welcome to <span className="text-5xl lg:text-8xl font-bold">vibeVault</span>
         </h1>
         <LoginForm />
-        {/* <VinylsGraphic styling="self-center xs:col-start-2 xs:row-span-2 sm:col-start-4 lg:col-start-7 lg:row-span-2" /> */}
       </div>
     </main>
   );
