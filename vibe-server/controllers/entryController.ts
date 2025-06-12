@@ -81,6 +81,45 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
   });
 };
 
+export const getTrackksByEntryId: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
+  const entryId = Number(req.params.entry_id);
+  const userId = req.userId;
+
+  if (isNaN(entryId)) {
+    res.status(400).json({ error: "Invalid entry_id" });
+    return;
+  }
+
+  const entryRepo = AppDataSource.getRepository(Entry);
+
+  const entry = await entryRepo.findOne({
+    where: { entry_id: entryId },
+    relations: ["entryTracks.track"], // still load entryTracks and their tracks
+  });
+
+  if (!entry) {
+    res.status(404).json({ error: "Entry not found" });
+    return;
+  }
+
+  if (entry.user_id !== userId) {
+    res.status(401).json({ error: "Access denied" });
+    return;
+  }
+
+  // Extract tracks from entry.entryTracks
+  const tracks = entry.entryTracks.map((et) => et.track);
+
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  const { entryTracks, ...entryWithoutEntryTracks } = entry;
+  const entryWithTracks = { ...entryWithoutEntryTracks, tracks };
+
+  res.json({
+    count: tracks.length,
+    entry: entryWithTracks,
+  });
+}
+
 export const createEntry: RequestHandler = async (req: Request, res: Response) => {
 
   const user_id = 1; //TODO: MUST BE CHANGED
@@ -145,7 +184,7 @@ export const createEntry: RequestHandler = async (req: Request, res: Response) =
 };
 
 export const updateEntry: RequestHandler = async (req: Request, res: Response) => {
-  const entryId = 2;
+  const entryId = 2; //TODO: MUST BE CHANGED
 
   if (isNaN(entryId)) {
     res.status(400).json({ error: "Invalid entry_id" });

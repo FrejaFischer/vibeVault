@@ -22,7 +22,7 @@ export function validateDescription(description: string): string[] {
     if (description.length > MAX_DESCRIPTION_LENGTH) {
         errors.push("Description can be max " + MAX_DESCRIPTION_LENGTH + " characters");
     } else if (description.length < MIN_DESCRIPTION_LENGTH && description.length !== 0) {
-        errors.push("Title must be at least " + MIN_DESCRIPTION_LENGTH + " characters or empty");
+        errors.push("Description must be at least " + MIN_DESCRIPTION_LENGTH + " characters or empty");
     }
 
     return errors;

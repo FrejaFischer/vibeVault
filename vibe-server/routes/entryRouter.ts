@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { verifyToken } from "../middleware/verifyToken";
-import { createEntry, getEntries, getEntryById, updateEntry } from "../controllers/entryController";
+import { createEntry, getEntries, getEntryById, updateEntry, getTrackksByEntryId } from "../controllers/entryController";
 
 const entryRouter = Router();
 
 // Use verifyToken middleware to authenticate token before running the requests
 entryRouter.get("/", verifyToken, getEntries);
 entryRouter.post("/", createEntry); // TO DO - add verifyToken
-entryRouter.put("/", updateEntry);
-entryRouter.get("/:entry_id", verifyToken, getEntryById); // TO DO - add verifyToken
+entryRouter.put("/", updateEntry); // TO DO - add verifyToken
+entryRouter.get("/:entry_id", verifyToken, getEntryById);
+entryRouter.get("/:entry_id/tracks", verifyToken, getTrackksByEntryId);
 
 // import { Router, Request, Response } from "express";
 // import { Entry } from "../entities/Entry";
