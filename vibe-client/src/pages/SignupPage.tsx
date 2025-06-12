@@ -1,5 +1,4 @@
 import SignupForm from "../components/SignupForm";
-// import VinylsGraphic from "../components/VinylsGraphic";
 
 const SignupPage = () => {
   return (
@@ -14,7 +13,6 @@ const SignupPage = () => {
           </h1>
           <SignupForm />
         </div>
-        {/* <VinylsGraphic styling=" hidden md:block md:self-center" /> */}
       </main>
     </>
   );
