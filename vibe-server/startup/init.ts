@@ -22,6 +22,13 @@ const init = (app: Application) => {
   // Enable JSON parsing for all requests to the server
   app.use(json());
 
+  // Prevent caching of routes
+  app.use((req, res, next) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Pragma", "no-cache");
+    next();
+  });
+
   // Connect to the Postgres database
   dbConnectPostgress();
 
