@@ -7,9 +7,9 @@ interface EntryTracksListProps {
 
 const EntryTracksList = ({ tracks }: EntryTracksListProps) => {
   return (
-    <ul>
-      {tracks.map((track) => (
-        <EntryTrackListItem key={track.track_id} track={track} />
+    <ul className="flex flex-col gap-6">
+      {tracks.map((track, index) => (
+        <EntryTrackListItem key={track.track_id} track={track} number={index + 1} />
       ))}
     </ul>
   );

@@ -14,7 +14,7 @@ export const useEntries = () => {
             try {
                 const response: Response<Entry> = await apiClient.getAll();
 
-                // Validation (OBS)
+                // TODO: Validation (OBS)
                 // Here there should be some validation of the data in the reponse - Sanitizing to avoid XSS
                 // To avoid running any html or javascript put in as data in the db
 

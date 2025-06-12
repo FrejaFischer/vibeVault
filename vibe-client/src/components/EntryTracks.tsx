@@ -1,11 +1,15 @@
-import { Track } from "@/types/track";
 import EntryTracksList from "./EntryTracksList";
+import { useEntryTracks } from "@/hooks/useEntryTracks";
 
 interface EntryTracksProps {
-  tracks: Track[];
+  entry_id: number;
 }
 
-const EntryTracks: React.FC<EntryTracksProps> = ({ tracks }) => {
+const EntryTracks = ({ entry_id }: EntryTracksProps) => {
+  const { tracks, isLoading, error } = useEntryTracks(entry_id);
+
+  if (isLoading) return <p>Loading tracks...</p>;
+  if (error) return <p>Error loading tracks: {error.message}</p>;
   return (
     <div>
       <EntryTracksList tracks={tracks} />

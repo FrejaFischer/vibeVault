@@ -1,6 +1,6 @@
-// Interface for what type of data Album have
+import { Artist } from "./artist";
 export interface Album {
   album_id: number;
   title: string;
-  artist_id: number;
+  artist: Artist | undefined
 }

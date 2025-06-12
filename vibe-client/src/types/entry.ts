@@ -1,4 +1,3 @@
-import { Track } from "./track"
 export interface Entry {
     entry_id?: number
     title: string
@@ -8,5 +7,4 @@ export interface Entry {
     cover_image: string
     description: string | null
     trackcount: number
-    tracks: Track[]
 }
