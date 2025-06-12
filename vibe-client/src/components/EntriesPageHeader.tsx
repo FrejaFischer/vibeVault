@@ -1,8 +1,11 @@
 import Button from "./Button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Search } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import { Input } from "./ui/input";
+
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import EntryForm from "./EntryForm";
 
 interface Props {
   className?: string;
@@ -12,7 +15,14 @@ const EntriesPageHeader = ({ className }: Props) => {
   return (
     <div className={"flex items-center gap-x-3" + " " + className}>
       <h1>Your vibeVault</h1>
-      <Button text="Create playlist" className="h-fit" />
+      <Dialog>
+        <DialogTrigger>
+          <Button text="Create playlist" className="h-fit" icon={<Plus />} />
+        </DialogTrigger>
+        <DialogContent>
+          <EntryForm />
+        </DialogContent>
+      </Dialog>
 
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
