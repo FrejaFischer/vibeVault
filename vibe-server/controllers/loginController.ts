@@ -57,7 +57,6 @@ export const postLogin: RequestHandler = async (req: Request, res: Response) => 
     if (isTest) {
       secure = false;
     }
-    console.log("login", secure);
   }
 
   res.cookie("token", token, {
