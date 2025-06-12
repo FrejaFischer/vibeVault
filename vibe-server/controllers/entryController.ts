@@ -55,7 +55,6 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
 
   const entry = await entryRepo.findOne({
     where: { entry_id: entryId },
-    relations: ["entryTracks.track"], // still load entryTracks and their tracks
   });
 
   if (!entry) {
@@ -68,20 +67,10 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
     return;
   }
 
-  // Extract tracks from entry.entryTracks
-  const tracks = entry.entryTracks.map((et) => et.track);
-
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  const { entryTracks, ...entryWithoutEntryTracks } = entry;
-  const entryWithTracks = { ...entryWithoutEntryTracks, tracks };
-
-  res.json({
-    count: tracks.length,
-    entry: entryWithTracks,
-  });
+  res.json({ entry });
 };
 
-export const getTrackksByEntryId: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
+export const getTracksByEntryId: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
   const entryId = Number(req.params.entry_id);
   const userId = req.userId;
 
@@ -94,7 +83,11 @@ export const getTrackksByEntryId: RequestHandler = async (req: AuthenticatedRequ
 
   const entry = await entryRepo.findOne({
     where: { entry_id: entryId },
-    relations: ["entryTracks.track"], // still load entryTracks and their tracks
+    relations: [
+      "entryTracks.track",
+      "entryTracks.track.album",
+      "entryTracks.track.album.artist",
+    ],
   });
 
   if (!entry) {
@@ -107,18 +100,28 @@ export const getTrackksByEntryId: RequestHandler = async (req: AuthenticatedRequ
     return;
   }
 
-  // Extract tracks from entry.entryTracks
-  const tracks = entry.entryTracks.map((et) => et.track);
-
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  const { entryTracks, ...entryWithoutEntryTracks } = entry;
-  const entryWithTracks = { ...entryWithoutEntryTracks, tracks };
+  const tracks = entry.entryTracks.map((et) => {
+    const { track } = et;
+    return {
+      track_id: track.track_id,
+      name: track.name,
+      album: {
+        album_id: track.album?.album_id,
+        title: track.album?.title,
+        artist: {
+          artist_id: track.album?.artist?.artist_id,
+          name: track.album?.artist?.name,
+        },
+      },
+    };
+  });
 
   res.json({
     count: tracks.length,
-    entry: entryWithTracks,
+    entry_id: entryId,
+    tracks,
   });
-}
+};
 
 export const createEntry: RequestHandler = async (req: Request, res: Response) => {
 
