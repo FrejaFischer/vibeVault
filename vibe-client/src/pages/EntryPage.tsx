@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import EntryCard from "@/components/EntryCard";
 import EntryTracks from "@/components/EntryTracks";
 import { useEntry } from "@/hooks/useEntry";
-import { Plus, SquarePen } from "lucide-react";
+import { Plus, SquarePen, ExternalLink } from "lucide-react";
 
 import { useParams } from "react-router";
 
@@ -16,20 +16,19 @@ const EntryPage = () => {
   console.log(entry);
 
   return (
-    <section className="md:grid md:grid-cols-3 md:gap-8">
+    <section className="md:mt-10 md:grid md:grid-cols-3 md:gap-8">
       <div className="col-span-2 flex items-center">
         <h1>{entry.title}</h1>
-        <div className="ml-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-            <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
-            <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
-          </svg>
-        </div>
+        {entry.playlist_link && (
+          <a href={entry.playlist_link} className="ml-auto">
+            <ExternalLink />
+          </a>
+        )}
       </div>
       <div className="col-start-1 row-start-1 row-span-3">
-        <EntryCard />
+        <EntryCard entry={entry} />
       </div>
-      <div className="flex flex-col col-span-2 gap-2.5 md:flex-row md:gap-4">
+      <div className="flex flex-col col-span-2 gap-2.5 md:flex-row md:gap-4 mb-7 md:mb-0">
         <Button text="Edit entry" className="h-fit w-full md:w-fit" version="ghost" icon={<SquarePen />} />
         <Button text="Create playlist" className="h-fit w-full md:w-fit" icon={<Plus />} />
       </div>

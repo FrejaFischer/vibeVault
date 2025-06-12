@@ -55,6 +55,7 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
 
   const entry = await entryRepo.findOne({
     where: { entry_id: entryId },
+    relations: ["entryTracks.track"],
   });
 
   if (!entry) {
@@ -67,8 +68,17 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
     return;
   }
 
-  res.json({ entry });
+  const trackcount = entry.entryTracks.length;
+
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  const { entryTracks, ...entryWithoutEntryTracks } = entry;
+  const entryResponse = { ...entryWithoutEntryTracks, trackcount };
+
+  res.json({
+    entry: entryResponse,
+  });
 };
+
 
 export const getTracksByEntryId: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
   const entryId = Number(req.params.entry_id);

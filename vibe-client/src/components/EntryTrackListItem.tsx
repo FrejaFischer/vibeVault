@@ -1,4 +1,5 @@
 import { Track } from "@/types/track";
+import { X } from "lucide-react";
 
 interface EntryTracksListItemProps {
   track: Track;
@@ -17,7 +18,7 @@ const EntryTrackListItem: React.FC<EntryTracksListItemProps> = ({ track, number 
             {track.album?.title}
           </p>
         </div>
-        <p className="">x</p>
+        <X />
       </article>
     </li>
   );

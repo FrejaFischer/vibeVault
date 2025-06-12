@@ -7,4 +7,5 @@ export interface Entry {
     cover_image: string
     description: string | null
     trackcount: number
+    created_at: string
 }
