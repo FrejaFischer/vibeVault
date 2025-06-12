@@ -1,22 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme static {
-  --font-display: "Baloo 2", "sans-serif";
-  --default-font-family: "Roboto", "sans-serif";
+  --default-font-family: "inter", "sans-serif";
 
   --breakpoint-xs: 520px;
 
   --color-black: #262626;
   --color-white: #f9f9f9;
 
-  --color-primary: #a2a77f;
   --color-secondary: #06062d;
 
   --color-blue-brand-100: #e6ebf4;
+  --color-blue-brand-500: #c1d3f7;
 
   --color-neutral-brand-010: #ffffff;
   --color-neutral-brand-100: #faf6f6;
