@@ -1,4 +1,5 @@
 import SignupForm from "../components/SignupForm";
+import VinylsGraphic from "../components/VinylsGraphic";
 
 const SignupPage = () => {
   return (
