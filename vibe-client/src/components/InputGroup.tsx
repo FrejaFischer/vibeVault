@@ -12,15 +12,15 @@ interface Props {
 
 const InputGroup = ({ labelText, id, inputName, inputType, value, onChange, errors }: Props) => {
   return (
-    <div className="flex flex-col w-52 md:w-xs">
-      <label htmlFor={id} className="md:text-2xl">
+    <div className="flex flex-col w-full mb-4 md:w-96">
+      <label htmlFor={id} className=" text-neutral-brand-700 md:text-lg">
         {labelText}
       </label>
       <InputField id={id} name={inputName} type={inputType} value={value} onChange={onChange} />
       {errors && errors.length > 0 && (
         <div className="error-messages">
           {errors.map((error, index) => (
-            <p key={index} style={{ color: "red" }}>
+            <p key={index} className="text-negative-brand-400">
               {error}
             </p>
           ))}
