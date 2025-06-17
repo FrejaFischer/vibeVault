@@ -13,10 +13,14 @@ const EntryCard = ({ entry }: EntryCardProps) => {
       </div>
       <p className="mb-5 md:mb-6">{entry.description}</p>
       <p className="text-xs md:text-base font-light">
-        Time period: <span className="font-semibold">{formatDateYMD(entry.created_at)}</span>
+        Time period:{" "}
+        <span className="font-semibold">
+          {formatDateYMD(entry.start_period)}
+          {entry.end_period ? " - " + formatDateYMD(entry.end_period) : ""}
+        </span>
       </p>
       <p className="text-xs md:text-base font-light">
-        Entry created: <span className="font-semibold">{formatDateYMD(entry.created_at)}</span>
+        Entry created: <span className="font-semibold">{entry.created_at && formatDateYMD(entry.created_at)}</span>
       </p>
       <p className="text-xs md:text-base font-light">
         Length: <span className="font-semibold">{entry.trackcount} songs</span>
