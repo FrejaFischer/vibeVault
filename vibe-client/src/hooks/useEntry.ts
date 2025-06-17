@@ -10,8 +10,7 @@ type EntryResponse = {
 };
 
 export const useEntry = (entry_id: number) => {
-  const [entry, setEntry] = useState<Entry>(Object);
-  //TODO: different object check
+  const [entry, setEntry] = useState<Entry | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -19,11 +18,9 @@ export const useEntry = (entry_id: number) => {
     const loadEntry = async () => {
       try {
         const response = await apiClient.getById<EntryResponse>(entry_id);
-
         setEntry(response.entry);
       } catch (error) {
         setError(error as Error);
-
         console.error("Failed to load data", error);
       } finally {
         setIsLoading(false);
@@ -35,3 +32,4 @@ export const useEntry = (entry_id: number) => {
 
   return { entry, isLoading, error };
 };
+

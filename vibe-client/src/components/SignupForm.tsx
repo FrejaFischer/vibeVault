@@ -61,14 +61,12 @@ const SignupForm = () => {
     if (Object.keys(newErrors).length > 0) return; // Gets an array of the keys in newErrors - Checks if at least one field had an error
 
     try {
-      const newTestData = await createUser({
+      const newUserData = await createUser({
         first_name: firstName,
         last_name: lastName,
         email,
         password,
       });
-
-      console.log(newTestData);
 
       // Reset states
       setFormData({

@@ -17,7 +17,6 @@ const EntryCard = ({ entry }: EntryCardProps) => {
           onError={(e) => {
             // If the image is not found, fallback to placeholder image
             const placeholder = getRandomFallbackImage();
-            console.log(placeholder);
             e.currentTarget.src = placeholder;
           }}
           className="w-full object-cover aspect-square rounded-lg"
