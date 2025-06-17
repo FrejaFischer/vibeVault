@@ -3,10 +3,11 @@ import EntriesListItem from "./EntriesListItem";
 
 interface Props {
   className?: string;
+  search: string;
 }
 
-const EntriesList = ({ className }: Props) => {
-  const { entries, error, isLoading } = useEntries();
+const EntriesList = ({ className, search }: Props) => {
+  const { entries, error, isLoading } = useEntries(search);
 
   if (error) {
     return <p>Error getting errors</p>;
