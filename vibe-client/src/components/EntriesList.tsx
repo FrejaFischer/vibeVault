@@ -11,7 +11,7 @@ const EntriesList = ({ className }: Props) => {
   if (error) {
     return <p>Error getting errors</p>;
   }
-  console.log(entries);
+
   return (
     <article className={className}>
       {isLoading ? (
@@ -21,7 +21,7 @@ const EntriesList = ({ className }: Props) => {
       ) : (
         <ul className="flex flex-col gap-6 md:gap-8">
           {entries.map((entry) => (
-            <EntriesListItem entry={entry} />
+            <EntriesListItem entry={entry} key={entry.entry_id} />
           ))}
         </ul>
       )}

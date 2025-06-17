@@ -6,5 +6,6 @@ export interface Entry {
     playlist_link: string | null
     cover_image: string
     description: string | null
-    trackcount: number
+    trackcount?: number
+    created_at?: string
 }

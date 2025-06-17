@@ -30,12 +30,12 @@ export function validateDescription(description: string): string[] {
 
 export function validateStartPeriod(start_period: string): string[] {
     const errors: string[] = [];
-    const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/; // YYYY-MM-DD format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}/; // YYYY-MM-DD format
 
     if (!start_period) {
         errors.push("Start period is required");
     } else if (!dateRegex.test(start_period)) {
-        errors.push("Start period must be in YYYY-MM-DD HH:MM:SS format");
+        errors.push("Start period must be a valid date");
     }
 
     return errors;
@@ -43,11 +43,11 @@ export function validateStartPeriod(start_period: string): string[] {
 
 export function validateEndPeriod(end_period: string): string[] {
     const errors: string[] = [];
-    const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/; // YYYY-MM-DD format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}/; // YYYY-MM-DD format
 
     if (end_period) {
         if (!dateRegex.test(end_period) && end_period.length !== 0) {
-            errors.push("End period must be in YYYY-MM-DD HH:MM:SS format");
+            errors.push("End period must be a valid date");
         }
     }
     return errors;
