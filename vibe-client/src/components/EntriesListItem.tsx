@@ -16,7 +16,7 @@ const EntriesListItem: React.FC<EntryListItemProps> = ({ entry }) => {
         <article className="flex gap-7 items-center w-full">
           <div className="bg-blue-brand-100 w-15 rounded-lg aspect-square md:w-19 md:h-19">
             <img
-              src={isSafeImageFilename(entry.cover_image) ? entry.cover_image : "fallback1.png"}
+              src={isSafeImageFilename(entry.cover_image) ? entry.cover_image : "/fallback1.png"}
               alt={entry.title}
               onError={(e) => {
                 // If the image is not found, fallback to placeholder image

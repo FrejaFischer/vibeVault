@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express";
+import { Response, RequestHandler } from "express";
 import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
 import { AuthenticatedRequest } from "../middleware/verifyToken";
@@ -53,9 +53,10 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
 
   const entryRepo = AppDataSource.getRepository(Entry);
 
+  // find entry by id with relations to entryTracks, to get the track count
   const entry = await entryRepo.findOne({
     where: { entry_id: entryId },
-    relations: ["entryTracks.track"],
+    relations: ["entryTracks"],
   });
 
   if (!entry) {
@@ -72,6 +73,7 @@ export const getEntryById: RequestHandler = async (req: AuthenticatedRequest, re
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   const { entryTracks, ...entryWithoutEntryTracks } = entry;
+  //remove entryTracks from the response, and add trackcount instead
   const entryResponse = { ...entryWithoutEntryTracks, trackcount };
 
   res.json({
@@ -133,9 +135,9 @@ export const getTracksByEntryId: RequestHandler = async (req: AuthenticatedReque
   });
 };
 
-export const createEntry: RequestHandler = async (req: Request, res: Response) => {
+export const createEntry: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
 
-  const user_id = 1; //TODO: MUST BE CHANGED
+  const user_id = req.userId;
 
   const { title, start_period, end_period, playlist_link, cover_image, description } = req.body || {};
 
@@ -196,7 +198,8 @@ export const createEntry: RequestHandler = async (req: Request, res: Response) =
   }
 };
 
-export const updateEntry: RequestHandler = async (req: Request, res: Response) => {
+export const updateEntry: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
+  // Not fully implemented yet
   const entryId = 2; //TODO: MUST BE CHANGED
 
   if (isNaN(entryId)) {

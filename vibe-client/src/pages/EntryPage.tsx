@@ -10,7 +10,7 @@ const EntryPage = () => {
   const { id } = useParams();
   const { entry, error, isLoading } = useEntry(Number(id));
 
-  if (isLoading) return <p className="m-auto">Loading tracks...</p>;
+  if (isLoading) return <p className="m-auto">Loading entry...</p>;
   if (error) return <p className="m-auto">Error getting Entry</p>;
 
   return (
