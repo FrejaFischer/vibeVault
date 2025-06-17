@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router";
-import InputGroup from "./InputGroup";
+import { Link, useNavigate } from "react-router";
 import { AxiosError } from "axios";
+import { AuthContext } from "../context/AuthContext";
+import InputGroup from "./InputGroup";
+import Button from "./Button";
 
 const LoginForm = () => {
   const auth = useContext(AuthContext);
@@ -40,11 +41,18 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col p-6 my-2 border-2 bg-white md:px-6 border-black rounded-2xl items-center justify-center gap-6">
+      <h2 className="uppercase font-black self-center my-2">Login</h2>
       <InputGroup inputType="email" id="txtEmail" inputName="email" labelText="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <InputGroup inputType="password" id="pwPassword" inputName="password" labelText="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <button type="submit">Login</button>
+      <Button type="submit" text="LOGIN" />
+      <p>
+        Or do you want to
+        <Link to="/signup" className="underline ml-2">
+          Signup?
+        </Link>
+      </p>
     </form>
   );
 };

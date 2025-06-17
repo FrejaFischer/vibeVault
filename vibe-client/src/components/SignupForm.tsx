@@ -91,24 +91,20 @@ const SignupForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="flex flex-col p-2 my-2 md:border-2 md:px-6 md:border-black md:rounded-2xl">
-        <h1 className="uppercase font-black">Signup today</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 items-center justify-center bg-white p-2 my-2 border-2 px-6 border-black rounded-2xl">
+        <h2 className="uppercase font-black">Signup today</h2>
         <InputGroup inputType="text" id="txtFirstName" inputName="firstName" labelText="First name" value={formData.firstName} onChange={handleChange} errors={errors.firstName} />
         <InputGroup inputType="text" id="txtLastName" inputName="lastName" labelText="Last name" value={formData.lastName} onChange={handleChange} errors={errors.lastName} />
         <InputGroup inputType="email" id="txtEmail" inputName="email" labelText="Email" value={formData.email} onChange={handleChange} errors={errors.email} />
         <InputGroup inputType="password" id="pwPassword" inputName="password" labelText="Password" value={formData.password} onChange={handleChange} errors={errors.password} />
         <InputGroup inputType="password" id="pwRepeat" inputName="repeatPassword" labelText="Repeat Password" value={formData.repeatPassword} onChange={handleChange} errors={errors.repeatPassword} />
-        <div className="self-center flex flex-col">
-          <div className="self-center">
-            <Button type="submit" text="SIGNUP" />
-          </div>
-          <p>
-            Already have an account?{" "}
-            <Link to="/" className="underline">
-              Login
-            </Link>
-          </p>
-        </div>
+        <Button type="submit" text="SIGNUP" />
+        <p>
+          Already have an account?{" "}
+          <Link to="/" className="underline">
+            Login
+          </Link>
+        </p>
       </form>
     </>
   );
