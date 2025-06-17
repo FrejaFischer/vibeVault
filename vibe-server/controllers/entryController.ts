@@ -3,7 +3,7 @@ import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
 import { AuthenticatedRequest } from "../middleware/verifyToken";
 import { validateCoverImage, validateDescription, validateEndPeriod, validatePlaylistLink, validateStartPeriod, validateTitle } from "../validators/entryValidator";
-import { ILike } from "typeorm";
+import { FindOptionsOrder, ILike } from "typeorm";
 
 /**
  * GET route for getting users entries (protected route)
@@ -14,14 +14,35 @@ import { ILike } from "typeorm";
 export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.userId; // Set the users id from token in request
   const search = req.query.search as string;
+
+  const sort = req.query.sort as string;
+
+  let order: FindOptionsOrder<Entry>;
+  switch (sort) {
+    case "alph":
+      order = { title: "ASC" };
+      break;
+    case "period":
+      order = { start_period: "DESC" };
+      break;
+    case "created":
+      order = { created_at: "DESC" };
+      break;
+    default:
+      order = { created_at: "DESC" };
+  }
   try {
     // Get the Entry Entity (table)
     const entryRepo = AppDataSource.getRepository(Entry);
 
     // Find entries with the user_id
     // If search query is provided, filter entries by title
-    const entries = search ? await entryRepo.find({ where: { user: { user_id: userId }, title: ILike(`%${search}%`) }, relations: ["entryTracks"], }) : await entryRepo.find({
-      where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
+    const entries = await entryRepo.find({
+      where: {
+        user: { user_id: userId },
+        ...(search && { title: ILike(`%${search}%`) }),
+      },
+      order,
       relations: ["entryTracks"],
     });
 
