@@ -9,7 +9,7 @@ interface EntryListItemProps {
 
 const EntriesListItem: React.FC<EntryListItemProps> = ({ entry }) => {
   return (
-    <li key={entry.entry_id}>
+    <li>
       <NavLink to={`/entries/${entry.entry_id}`}>
         <article className="flex gap-7 items-center w-full">
           <div className="bg-neutral-brand-150 w-15 rounded-lg aspect-square md:w-19 md:h-19">
