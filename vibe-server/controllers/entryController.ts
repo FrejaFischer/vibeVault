@@ -3,6 +3,7 @@ import { AppDataSource } from "../startup/data-source";
 import { Entry } from "../entities/Entry";
 import { AuthenticatedRequest } from "../middleware/verifyToken";
 import { validateCoverImage, validateDescription, validateEndPeriod, validatePlaylistLink, validateStartPeriod, validateTitle } from "../validators/entryValidator";
+import { ILike } from "typeorm";
 
 /**
  * GET route for getting users entries (protected route)
@@ -12,18 +13,17 @@ import { validateCoverImage, validateDescription, validateEndPeriod, validatePla
 
 export const getEntries: RequestHandler = async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.userId; // Set the users id from token in request
-
+  const search = req.query.search as string;
   try {
     // Get the Entry Entity (table)
     const entryRepo = AppDataSource.getRepository(Entry);
 
     // Find entries with the user_id
-    const entries = await entryRepo.find({
+    // If search query is provided, filter entries by title
+    const entries = search ? await entryRepo.find({ where: { user: { user_id: userId }, title: ILike(`%${search}%`) }, relations: ["entryTracks"], }) : await entryRepo.find({
       where: { user: { user_id: userId } }, // the relation `user` is from the Entry entity
       relations: ["entryTracks"],
     });
-
-    // send reponse of entries
 
     //only show id, title, start date, trackcount
     res.json({
