@@ -65,7 +65,6 @@ const EntryForm = () => {
 
     // If there are no errors, submit the form
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted successfully with data:", formData);
       try {
         const newEntry = await createEntry({
           title,
@@ -75,7 +74,6 @@ const EntryForm = () => {
           start_period: formattedStart,
           end_period: formattedEnd || null,
         });
-        console.log("New entry created:", newEntry);
 
         // Reset form
         setFormData({
@@ -90,13 +88,12 @@ const EntryForm = () => {
 
         navigate(`/entries/${newEntry.entry_id}`);
       } catch (error) {
-        console.error("Failed to create entry", error);
+        setErrors({ general: ["Failed to create entry. System error"] });
+        console.error("client error", error);
       }
-    } else {
-      console.log("formData:", formData);
-      console.log("Form has errors:", newErrors);
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <DialogHeader>

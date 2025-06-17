@@ -12,7 +12,6 @@ const userRepo = AppDataSource.getRepository(Test);
 // GET route, for getting all test users
 testRouter.get("/", async (req, res) => {
   const users = await userRepo.find();
-  // console.log("Fetched rows:", users); // See the fetched rows
   res.json({
     count: users.length,
     results: users,

@@ -7,12 +7,11 @@ const UserNav = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    console.log("logout");
     try {
       await auth?.logout();
       navigate("/"); // Redirect after successful logout
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   return (

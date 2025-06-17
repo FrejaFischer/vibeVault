@@ -16,17 +16,13 @@ export const useAlbums = () => {
         // Getting all albums from api endpoint. Expect reponse to be of type Album
         const response: Response<Album> = await apiClient.getAll();
 
-        // Validation (OBS)
-        // Here there should be some validation of the data in the reponse - Sanitizing to avoid XSS
-        // To avoid running any html or javascript put in as data in the db
-
         // Storing the results of the response from API
         setAlbums(response.results);
       } catch (err) {
         // set the error for components to see
         setError(err as Error);
         // log the error
-        console.error("Failed to load test data", err);
+        console.error("Failed to load album data", err);
       } finally {
         setLoading(false);
       }
