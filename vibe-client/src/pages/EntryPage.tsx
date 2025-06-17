@@ -13,8 +13,6 @@ const EntryPage = () => {
   if (isLoading) return <p className="m-auto">Loading tracks...</p>;
   if (error) return <p className="m-auto">Error getting Entry</p>;
 
-  console.log(entry);
-
   return (
     <section className="md:mt-10 md:grid md:grid-cols-3 md:gap-8">
       <div className="col-span-2 flex items-center">
