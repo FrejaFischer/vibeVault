@@ -9,9 +9,11 @@ import EntryForm from "./EntryForm";
 
 interface Props {
   className?: string;
+  setSearchTerm: (term: string) => void;
+  setSort: (value: string) => void;
 }
 
-const EntriesPageHeader = ({ className }: Props) => {
+const EntriesPageHeader = ({ className, setSearchTerm, setSort }: Props) => {
   return (
     <div className={"flex items-center gap-x-3" + " " + className}>
       <h1>Your vibeVault</h1>
@@ -26,13 +28,14 @@ const EntriesPageHeader = ({ className }: Props) => {
 
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input placeholder="Search" className="pl-8" />
+        <Input placeholder="Search" className="pl-8" onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
-      <Select>
+      <Select onValueChange={setSort}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="created">Created</SelectItem>
           <SelectItem value="alph">Alphabetical</SelectItem>
           <SelectItem value="period">Time period</SelectItem>
         </SelectContent>
