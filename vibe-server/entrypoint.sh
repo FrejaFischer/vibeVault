@@ -1,12 +1,20 @@
 #!/bin/sh
 
+# File for storing authentication cookie
+COOKIE_JAR="cookies.txt"
+# Remove file if it already exist (clean up from the past runs)
+rm -f $COOKIE_JAR
+
 get_script() {
     URL="${BASE_URL}$1"
     PATTERN=$2
     EXPECTED_STATUS=$3
 
-    # Get response body and status code
-    RESPONSE=$(curl -s -w "\n%{http_code}" "$URL")
+    # Get response body and status code, include cookies from cookie jar file
+    RESPONSE=$(curl -s -w "\n%{http_code}" \
+        -b $COOKIE_JAR \
+        "$URL")
+    
     BODY=$(echo "$RESPONSE" | head -n -1)
     STATUS=$(echo "$RESPONSE" | tail -n1)
 
@@ -30,7 +38,22 @@ post_script() {
     DATA=$2
     EXPECTED_STATUS=$4
 
-    RESPONSE=$(curl -s -w "\n%{http_code}" -X POST -H "Content-Type: application/json" -d "$DATA" "$URL")
+    if [ "$1" = "login" ]; then
+        # Save cookies after login in cookie jar file, if request is to login
+        RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Content-Type: application/json" \
+            -d "$DATA" \
+            -c $COOKIE_JAR \
+            "$URL")
+    else
+        # Send request and read cookie from cookie jar file (like get_script request)
+        RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Content-Type: application/json" \
+            -d "$DATA" \
+            -b $COOKIE_JAR \
+            "$URL")
+    fi
+
     BODY=$(echo "$RESPONSE" | head -n -1)
     STATUS=$(echo "$RESPONSE" | tail -n1)
 
@@ -53,6 +76,7 @@ case "${RTE}" in
 
 dev)
     echo "====== SERVER || Development mode starting... ======"
+    npm install
     npm run start
     ;;
 test)
@@ -66,6 +90,9 @@ test)
     sleep 10
 
     BASE_URL="http://nginx/api/"
+    
+    post_script "users" '{"first_name":"Mr.", "last_name":"Test", "email":"test@test.dk", "password":"Password123!"}' "User created successfully" 201
+    post_script "login" '{"email":"test@test.dk", "password":"Password123!"}' "Login successful" 200
 
     get_script "artists/1/albums" "For Those About To Rock We Salute You" 200
     get_script "albums?search=lover" "Pure Cult: The Best Of The Cult (For Rockers, Ravers, Lovers & Sinners)" 200
@@ -73,7 +100,6 @@ test)
     get_script "artists?search=audios" "Audioslave" 200
     get_script "tracks?search=old-fashioned" "Good Old-Fashioned Lover Boy" 200
 
-    post_script "users" '{"first_name":"Mr.", "last_name":"Test", "email":"test@test.dk", "password":"Password123!"}' "User created successfully" 201
     post_script "users" '{"first_name":"Mr.", "last_name":"Test", "email":"test@test.dk", "password":"Password123!"}' "Could not insert user" 400
 
     ;;

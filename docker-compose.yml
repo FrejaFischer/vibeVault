@@ -21,6 +21,8 @@ services:
       - postgres
     environment:
       RTE: ${RTE}
+      JWT_SECRET: ${JWT_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       DATABASE_URL: postgresql://app1:changethispassword@postgres:5432/vibevault
     ports:
       - "5000:5000"
@@ -42,7 +44,7 @@ services:
     networks:
       - frontend
     volumes:
-      - ./vibe-client:/app # mounted volume. For connecting our client folder to our docker app directory, and make it update when changes appear
+      - ./vibe-client:/app # mounted volume. For connecting our client folder to our docker app directory, and make it update when changes appear.
       - /app/node_modules # exclude dependencies on the mount. If new depencies is added, we need to build again
 
   nginx:

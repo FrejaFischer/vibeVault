@@ -59,7 +59,7 @@ CREATE TABLE artist
 
 CREATE TABLE entry
 (
-    entry_id INT NOT NULL,
+    entry_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(120) NOT NULL,
     start_period TIMESTAMP NOT NULL,
@@ -69,8 +69,8 @@ CREATE TABLE entry
     description VARCHAR(600),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    deleted_at TIMESTAMPTZ,
-    CONSTRAINT entry_pkey PRIMARY KEY  (entry_id)
+    deleted_at TIMESTAMPTZ
+
 );
 
 CREATE TABLE entry_track
@@ -135,8 +135,8 @@ ALTER TABLE entry_track
    Populate Tables
 ********************************************************************************/
 INSERT INTO users (first_name, last_name, email, password, updated_at, deleted_at) VALUES
-    (N'John', N'Doe', 'john.doe@example.com', 'hashed_password1', NOW(), NULL),
-    (N'Jane', N'Smith', 'jane.smith@example.com', 'hashed_password2', NOW(), NULL);
+    (N'John', N'Doe', 'john.doe@example.com', '$2b$10$YnanhurWgOErw5x4d9D0XuO98FXPt8V2SEPX5C3DC1/mY1pkei8hm', NOW(), NULL),
+    (N'Jane', N'Smith', 'jane.smith@example.com', '$2b$10$YnanhurWgOErw5x4d9D0XuO98FXPt8V2SEPX5C3DC1/mY1pkei8hm', NOW(), NULL);
 
 INSERT INTO artist (artist_id, name) VALUES
     (1, N'AC/DC'),

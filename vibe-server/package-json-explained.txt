@@ -4,22 +4,28 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --legacy-watch --exec ts-node --transpile-only index.ts", // uses nodemon to start server and ts-node to run TS
-    "build": "npm install && tsc"
+    "build": "npm install && tsc",
+    "test": "npm install && tsc && node dist/index.js",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@eslint/js": "^9.26.0",            // Eslint
     "bcrypt": "^6.0.0",                 // For hashing passwords
+    "cookie-parser": "^1.4.7",          // For parsing cookies, where tokens are in
     "cors": "^2.8.5",                   // Package for implementing CORS
     "dotenv": "^16.5.0",                // For getting .env files
     "express": "^5.1.0"                 // Node.js web application framework. Handles HTTP Requests, Routing System and more.
+    "jsonwebtoken": "^9.0.2",           // To create Json Web Tokens for login
     "pg": "^8.15.6",                    // PostgreSQL client for Node.js
     "reflect-metadata": "^0.2.2",       // Used by Typeorm
     "typeorm": "^0.3.23"                // For connecting and working with our database
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",                     // Type definition package that adds the missing TypeScript support for bcrypt
+    "@types/cookie-parser": "^1.4.8",              // Type definition package that adds the missing TypeScript support for cookie-parser
     "@types/cors": "^2.8.18",                      // Type definition package that adds the missing TypeScript support for Cors
     "@types/express": "^5.0.1",                    // Type definition package that adds the missing TypeScript support for Express
+    "@types/jsonwebtoken": "^9.0.9",               // Type definition package that adds the missing TypeScript supprt for jsonwebtoken
     "@typescript-eslint/eslint-plugin": "^8.32.1", // Eslint
     "@typescript-eslint/parser": "^8.32.1",        // Eslint
     "@typescript-eslint/utils": "^8.32.1",         // Eslint

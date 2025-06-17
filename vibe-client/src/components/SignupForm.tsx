@@ -3,7 +3,7 @@ import { useCreateUser } from "../hooks/useCreateUser";
 import InputGroup from "./InputGroup";
 import Button from "./Button";
 import { validateEmail, validateFirstName, validateLastName, validatePassword, validateRepeatPassword } from "../validation/userValidation";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const SignupForm = () => {
   const createUser = useCreateUser(); // Create user hook
@@ -91,13 +91,20 @@ const SignupForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 items-center justify-center bg-white p-2 my-2 border-2 px-6 border-black rounded-2xl">
+        <h2 className="uppercase font-black">Signup today</h2>
         <InputGroup inputType="text" id="txtFirstName" inputName="firstName" labelText="First name" value={formData.firstName} onChange={handleChange} errors={errors.firstName} />
         <InputGroup inputType="text" id="txtLastName" inputName="lastName" labelText="Last name" value={formData.lastName} onChange={handleChange} errors={errors.lastName} />
         <InputGroup inputType="email" id="txtEmail" inputName="email" labelText="Email" value={formData.email} onChange={handleChange} errors={errors.email} />
         <InputGroup inputType="password" id="pwPassword" inputName="password" labelText="Password" value={formData.password} onChange={handleChange} errors={errors.password} />
         <InputGroup inputType="password" id="pwRepeat" inputName="repeatPassword" labelText="Repeat Password" value={formData.repeatPassword} onChange={handleChange} errors={errors.repeatPassword} />
         <Button type="submit" text="SIGNUP" />
+        <p>
+          Already have an account?{" "}
+          <Link to="/" className="underline">
+            Login
+          </Link>
+        </p>
       </form>
     </>
   );
