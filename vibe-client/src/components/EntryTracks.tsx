@@ -10,8 +10,9 @@ const EntryTracks = ({ entry_id }: EntryTracksProps) => {
 
   if (isLoading) return <p>Loading tracks...</p>;
   if (error) return <p>Error loading tracks: {error.message}</p>;
+  if (!tracks || tracks.length === 0) return <p className="pb-1.5 md:min-h-[300px]">No tracks found for this entry.</p>;
   return (
-    <div>
+    <div className="md:min-h-[300px]">
       <EntryTracksList tracks={tracks} />
     </div>
   );
