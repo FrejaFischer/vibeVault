@@ -94,9 +94,9 @@ const EntryForm = () => {
 
         // Check what kind of error
         if (error.response?.status === 400) {
-          setErrorMessage("Failed to create user. Please check all infomation is given correctly.");
+          setErrorMessage("Failed to create entry. Please check all infomation is given correctly.");
         } else {
-          setErrorMessage("Failed to create user. System error - Please contact customer service");
+          setErrorMessage("Failed to create entry. System error - Please contact customer service");
         }
       }
     }
