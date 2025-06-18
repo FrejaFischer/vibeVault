@@ -100,7 +100,7 @@ test)
     get_script "artists?search=audios" "Audioslave" 200
     get_script "tracks?search=old-fashioned" "Good Old-Fashioned Lover Boy" 200
 
-    post_script "users" '{"first_name":"Mr.", "last_name":"Test", "email":"test@test.dk", "password":"Password123!"}' "Could not insert user" 400
+    post_script "users" '{"first_name":"Mr.", "last_name":"Test", "email":"test@test.dk", "password":"Password123!"}' "Email already in use" 400
 
     ;;
 prod)

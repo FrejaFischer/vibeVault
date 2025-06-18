@@ -5,6 +5,7 @@ import InputGroup from "./InputGroup";
 import { DialogTitle, DialogFooter, DialogHeader } from "./ui/dialog";
 import { validateCoverImage, validateDescription, validateEndPeriod, validatePlaylistLink, validateStartPeriod, validateTitle } from "@/validation/entryValidation";
 import { useNavigate } from "react-router";
+import { AxiosError } from "axios";
 
 const EntryForm = () => {
   const createEntry = useCreateEntry(); // Hook to create a new entry
@@ -20,6 +21,7 @@ const EntryForm = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string[]>>({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   /**
    * Handles onChange events for all inputs
@@ -87,9 +89,15 @@ const EntryForm = () => {
         setErrors({});
 
         navigate(`/entries/${newEntry.entry_id}`);
-      } catch (error) {
-        setErrors({ general: ["Failed to create entry. System error"] });
-        console.error("client error", error);
+      } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        // Check what kind of error
+        if (error.response?.status === 400) {
+          setErrorMessage("Failed to create entry. Please check all infomation is given correctly.");
+        } else {
+          setErrorMessage("Failed to create entry. System error - Please contact customer service");
+        }
       }
     }
   };
@@ -111,8 +119,17 @@ const EntryForm = () => {
           </div>
         </div>
       </div>
-      <DialogFooter className="pt-6">
-        <Button text="Create entry" type="submit" version="positive" />
+      <DialogFooter className="pt-4">
+        <div className="flex gap-2 justify-between">
+          {errorMessage.length > 0 ? (
+            <div className=" w-1/2">
+              <p className="text-negative-brand-400">{errorMessage}</p>
+            </div>
+          ) : (
+            ""
+          )}
+          <Button text="Create entry" type="submit" version="positive" />
+        </div>
       </DialogFooter>
     </form>
   );
