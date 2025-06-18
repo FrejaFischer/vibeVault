@@ -68,6 +68,17 @@ export const postUser: RequestHandler = async (req: Request, res: Response) => {
     await userRepo.save(newUser);
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
-    res.status(400).json({ message: "Could not insert user", error: error });
+    // Check if error is because of email contraint
+    if (typeof error === "object" && error !== null && "code" in error && "constraint" in error && error.code === "23505" && error.constraint === "users_email_key") {
+      res.status(400).json({
+        message: "Email already in use",
+        error: { constraint: error.constraint, code: error.code },
+      });
+    } else {
+      res.status(400).json({
+        message: "Could not insert user",
+        error,
+      });
+    }
   }
 };

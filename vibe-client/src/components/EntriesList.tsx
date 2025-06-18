@@ -3,15 +3,17 @@ import EntriesListItem from "./EntriesListItem";
 
 interface Props {
   className?: string;
+  search: string;
+  sort?: string;
 }
 
-const EntriesList = ({ className }: Props) => {
-  const { entries, error, isLoading } = useEntries();
+const EntriesList = ({ className, search, sort }: Props) => {
+  const { entries, error, isLoading } = useEntries(search, sort);
 
   if (error) {
     return <p>Error getting errors</p>;
   }
-  console.log(entries);
+
   return (
     <article className={className}>
       {isLoading ? (
@@ -21,7 +23,7 @@ const EntriesList = ({ className }: Props) => {
       ) : (
         <ul className="flex flex-col gap-6 md:gap-8">
           {entries.map((entry) => (
-            <EntriesListItem entry={entry} />
+            <EntriesListItem entry={entry} key={entry.entry_id} />
           ))}
         </ul>
       )}

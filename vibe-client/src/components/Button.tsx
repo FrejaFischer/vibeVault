@@ -17,7 +17,7 @@ const versionClassMap: Record<NonNullable<ButtonProps["version"]>, string> = {
 
 const Button = ({ type = "button", version = "primary", text, className, icon }: ButtonProps) => {
   return (
-    <button type={type} className={`btn rounded-lg px-4 py-2 text-xl font-bold cursor-pointer capitalize flex items-center ${versionClassMap[version] || ""} ${className}`}>
+    <button type={type} className={`btn rounded-lg px-2 py-1 text-lg md:px-4 md:py-2 md:text-xl font-bold cursor-pointer capitalize flex items-center ${versionClassMap[version] || ""} ${className}`}>
       {icon && <span className="mr-1.5">{icon}</span>}
       {text}
     </button>

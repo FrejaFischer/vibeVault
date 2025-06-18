@@ -4,6 +4,7 @@ import InputGroup from "./InputGroup";
 import Button from "./Button";
 import { validateEmail, validateFirstName, validateLastName, validatePassword, validateRepeatPassword } from "../validation/userValidation";
 import { Link, useNavigate } from "react-router";
+import { AxiosError } from "axios";
 
 const SignupForm = () => {
   const createUser = useCreateUser(); // Create user hook
@@ -18,6 +19,7 @@ const SignupForm = () => {
   }); // State to handle input values
 
   const [errors, setErrors] = useState<Record<string, string[]>>({}); // Object State for storing errors (The keys are strings. The values are arrays of strings)
+  const [errorMessage, setErrorMessage] = useState("");
 
   /**
    * Handles onChange events for all inputs
@@ -61,14 +63,12 @@ const SignupForm = () => {
     if (Object.keys(newErrors).length > 0) return; // Gets an array of the keys in newErrors - Checks if at least one field had an error
 
     try {
-      const newTestData = await createUser({
+      await createUser({
         first_name: firstName,
         last_name: lastName,
         email,
         password,
       });
-
-      console.log(newTestData);
 
       // Reset states
       setFormData({
@@ -84,8 +84,18 @@ const SignupForm = () => {
       // redirect to login / landingpage
       navigate("/");
     } catch (err) {
-      setErrors({ general: ["Failed to create user. System error"] });
-      console.error("client error", err);
+      const error = err as AxiosError<{ error: string }>;
+
+      // Check what kind of error
+      if (error.response?.status === 400) {
+        if ("message" in error.response.data && error.response?.data?.message === "Email already in use") {
+          setErrorMessage("Failed to create user. Email is already in use.");
+        } else {
+          setErrorMessage("Failed to create user. Please check all infomation is given correctly.");
+        }
+      } else {
+        setErrorMessage("Failed to create user. System error - Please contact customer service");
+      }
     }
   };
 
@@ -99,6 +109,13 @@ const SignupForm = () => {
         <InputGroup inputType="password" id="pwPassword" inputName="password" labelText="Password" value={formData.password} onChange={handleChange} errors={errors.password} />
         <InputGroup inputType="password" id="pwRepeat" inputName="repeatPassword" labelText="Repeat Password" value={formData.repeatPassword} onChange={handleChange} errors={errors.repeatPassword} />
         <Button type="submit" text="SIGNUP" />
+        {errorMessage.length > 0 ? (
+          <div className="error-messages">
+            <p className="text-negative-brand-400">{errorMessage}</p>
+          </div>
+        ) : (
+          ""
+        )}
         <p>
           Already have an account?{" "}
           <Link to="/" className="underline">

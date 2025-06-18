@@ -5,7 +5,7 @@ const dbConnectPostgress = async () => {
     await AppDataSource.initialize(); // Connect to postgres database
     console.log("Connected to Postgres database");
   } catch (error) {
-    console.log("Error connecting to Postgres database", error);
+    console.error("Error connecting to Postgres database", error);
   }
 };
 

@@ -8,8 +8,8 @@ const apiClient = new ApiClient<User>("/users");
 export const useCreateUser = () => {
   return async (user: Omit<User, "user_id">) => {
     try {
-      const newTest = await apiClient.post(user);
-      return newTest;
+      const newUser = await apiClient.post(user);
+      return newUser;
     } catch (error) {
       console.error("Failed to create user", error);
       throw error;
